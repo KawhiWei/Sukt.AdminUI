@@ -49,6 +49,8 @@
   },
   "devDependencies": {
     "guid-typescript": "^1.0.9",
+    "inversify": "^5.0.5",
+    "reflect-metadata": "^0.1.13",
     "style-resources-loader": "^1.4.1"
   }
 }
