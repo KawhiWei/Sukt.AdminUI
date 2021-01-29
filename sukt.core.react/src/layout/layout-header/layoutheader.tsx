@@ -6,7 +6,7 @@ export default class Layoutheader extends Component {
     render() {
         return (
             <div>
-                <Layout.Header>Header</Layout.Header>
+                <Layout.Header className="base-test">Header</Layout.Header>
             </div>
         )
     }
