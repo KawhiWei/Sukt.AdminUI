@@ -1,6 +1,7 @@
 {
   "extends": "./paths.json",
   "compilerOptions": {
+    "experimentalDecorators": true,
     "target": "es5",
     "lib": [
       "dom",

@@ -11,14 +11,20 @@
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.53",
     "@types/react-dom": "^16.9.8",
+    "@types/react-router-dom": "^5.1.7",
     "antd": "^4.10.2",
+    "axios": "^0.21.1",
     "customize-cra": "^1.0.0",
     "less": "^4.1.0",
     "less-loader": "^7.3.0",
     "react": "^17.0.1",
     "react-app-rewired": "^2.1.8",
     "react-dom": "^17.0.1",
+    "react-router-config": "^5.1.1",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
+    "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0",
     "typescript": "^4.0.3",
     "web-vitals": "^0.2.4"
   },
@@ -50,6 +56,7 @@
   "devDependencies": {
     "guid-typescript": "^1.0.9",
     "inversify": "^5.0.5",
+    "mockjs": "^1.1.0",
     "reflect-metadata": "^0.1.13",
     "style-resources-loader": "^1.4.1"
   }
