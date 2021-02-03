@@ -1,10 +1,16 @@
 import React from 'react';
 import { Layout } from 'antd';
-function LayoutSider() {
-  return (
-    <Layout.Sider>
+import Menus from "@/component/menu-tab";
+import { IMenuOpInst } from '@/core/domain/menu-domain/entity/IMenu';
 
-    </Layout.Sider>
-  )
+class LayoutSider extends React.Component<{ menus: IMenuOpInst[] }> {
+  render() {
+    return (
+      <Layout.Sider>
+        <Menus menus={this.props.menus} />
+      </Layout.Sider>
+    )
+  }
 }
+
 export default LayoutSider;

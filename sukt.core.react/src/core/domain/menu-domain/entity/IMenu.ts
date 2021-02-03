@@ -30,12 +30,12 @@ export interface IRoute {
   /**
    * 对应组件
    */
-  component: string;
+  component:string;
   /**
    * 组件名
    */
   componentName: string;
-  meta: IMetaBase;
+  meta?: IMetaBase;
 }
 export interface IMetaBase {
   title: string;
@@ -112,26 +112,14 @@ export interface IMenuInfo {
   menuItemList: IMenuOpInst[];
 }
 
-//#region
-export class MenuStuff implements IMenuStuff {
-  mode: MenuEnum.EMenuMode = MenuEnum.EMenuMode.vertical;
-  accordion: boolean = true;
-  theme: MenuEnum.EMenuTheme = MenuEnum.EMenuTheme.dark;
+
+export interface IMenuRoute {
+  id: string;
+  name: string;
+  path: string;
+  component?: any;
+  exact?: boolean;
+  redirect?: string;
+  children: IMenuRoute[];
+  isShow:boolean;
 }
-export class RouteMeta implements IRouteMeta {
-  title: string = "";
-}
-export class RouteInfo implements IRoute {
-  name: string = "";
-  path: string = "";
-  meta: IRouteMeta = new RouteMeta();
-  component: string = "";
-  componentName: string = "";
-}
-export class MenuOther implements IMenuOther {
-  isShow: boolean = true;
-  sort: ESort = ESort.Ascending;
-  buttonClick: string = "";
-  menuEnum: MenuEnum.EMenuType = MenuEnum.EMenuType.Menu;
-}
-//#endregion

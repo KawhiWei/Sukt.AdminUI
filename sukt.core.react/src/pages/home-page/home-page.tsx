@@ -1,7 +1,9 @@
 import React from 'react';
-function HomePage() {
-  return (
-    <div>主页</div>
-  )
+class HomePage extends React.Component {
+  render() {
+    return (
+      <div>主頁</div>
+    )
+  }
 }
 export default HomePage;

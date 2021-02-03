@@ -1,3 +1,5 @@
+import { IMenuOpInst } from "../domain/menu-domain/entity/IMenu";
+
 export interface IMenu {
   key: string;
   title: string;
@@ -5,95 +7,43 @@ export interface IMenu {
   children: IMenu[];
   icon?: string;
 }
-export const menuList: IMenu[] = [
+export const menuList: IMenuOpInst[] = [
   {
-    key: "hook",
-    title: "hook",
-    path: "/hook",
-    children: [
-      {
-        key: "useState",
-        title: "useState",
-        path: "/hook/useState",
-        children: []
-      },
-      {
-        key: "useEffect",
-        title: "useEffect",
-        path: "/hook/useEffect",
-        children: []
-      },
-      {
-        key: "customHook",
-        title: "自定义Hook",
-        path: "/hook/customHook",
-        children: []
-      },
-      {
-        key: "useReducer",
-        title: "useReducer",
-        path: "/hook/useReducer",
-        children: []
-      },
-      {
-        key: "useContext",
-        title: "useContext",
-        path: "/hook/useContext",
-        children: []
-      },
-      {
-        key: "others",
-        title: "其他",
-        path: "/hook/others",
-        children: []
-      }
-
-    ]
-  },
-
-  {
-    key: "contains",
-    title: "组合",
-    path: "/contains",
-    children: [
-      {
-        key: "contains-demo",
-        title: "组合-包含",
-        path: "/contains/demo",
-        children: []
-      },
-      // {
-      //   key: "contains-1-1",
-      //   title: "组合测试1",
-      //   path: "/combination/demo1",
-      //   children: []
-      // }
-    ]
+    id: "13245",
+    name: "主页",
+    path: "/home",
+    component: "pages/home/home",
+    tabs: [],
+    buttonClick: "",
+    buttons: [],
+    parentId: "000",
+    icon: "",
+    parentNumber: "",
+    eName: "",
+    microName: "",
+    componentName: "home",
+    sort: 0,
+    isShow: true,
+    menuEnum: 0,
+    children: [],
   },
   {
-    key: "router",
-    title: "路由",
-    path: "/router",
-    children: [
-      {
-        key: "router-1",
-        title: "路由demo1",
-        path: "router/demo1",
-        children: []
-      }
-    ]
-  },
-  {
-    key: "classComponent",
-    title: "类组件",
-    path: "/class",
-    children: [
-      {
-        key: 'class-inject',
-        title: "注入测试",
-        path: "/class/inject",
-        children: []
-      }
-    ]
+    id: "132445765",
+    name: "測試",
+    path: "/test-page",
+    component: "pages/test-page/test-page",
+    tabs: [],
+    buttonClick: "",
+    buttons: [],
+    parentId: "000",
+    icon: "",
+    parentNumber: "",
+    eName: "",
+    microName: "",
+    componentName: "test-page",
+    sort: 0,
+    isShow: true,
+    menuEnum: 0,
+    children: [],
   }
 ]
