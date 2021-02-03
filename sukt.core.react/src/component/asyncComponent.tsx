@@ -9,7 +9,7 @@ export const asyncComponent = (loadComponent: () => Promise<any>) => (
       }
     }
 
-    UNSAFE_componentWillMount() {
+    componentWillMount() {
       if (this.hasLoadedComponent()) {
         return
       }

@@ -100,14 +100,28 @@ class RouteAuth extends React.Component<IProp> {
 
       }
     } else {  // 非登录状态
-      return (
-        <>
-          {config.map((route: IMenuRoute) => {
-            return  <Route exact={true} key={route.id} path={route.path} component={route.component}/>
-          })}
-          <Redirect to='/login' />
-        </>
-      )
+      if(pathname.includes("callback")){
+        const {hash} = window.location;
+        const path = `${pathname}${hash}`
+        return (
+          <>
+            {config.map((route: IMenuRoute) => {
+              return  <Route exact={true} key={route.id} path={route.path} component={route.component}/>
+            })}
+            <Redirect to={path}/>
+          </>
+        )
+      } else {
+        return (
+          <>
+            {config.map((route: IMenuRoute) => {
+              return  <Route exact={true} key={route.id} path={route.path} component={route.component}/>
+            })}
+            <Redirect to='/login' />
+          </>
+        )
+      }
+      
     }
   }
 }
