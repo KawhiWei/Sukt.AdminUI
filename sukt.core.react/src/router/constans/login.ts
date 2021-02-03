@@ -12,15 +12,15 @@ const login: IMenuRoute[] = [
     component: LoginView,
     isShow: false,
     children: [],
-	},
-	{
-		id:Guid.create().toString(),
-		name: "callback",
+  },
+  {
+    id:Guid.create().toString(),
+    name: "callback",
     path: '/callback',
     component: Callback,
     isShow: false,
     children: [],
-	}
+  }
 ];
 
 export default login;

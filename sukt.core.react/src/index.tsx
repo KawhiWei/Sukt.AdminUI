@@ -1,4 +1,4 @@
-import "antd/dist/antd.css";
+import "antd/dist/antd.less";
 // import LayoutView from "@/layout/layout-view";
 import React from 'react';
 import ReactDOM from 'react-dom';

@@ -121,7 +121,7 @@ class RouteAuth extends React.Component<IProp> {
           </>
         )
       }
-      
+
     }
   }
 }

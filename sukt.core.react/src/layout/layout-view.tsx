@@ -16,6 +16,7 @@ export default class LayoutView extends Component<IProp, { routes:IMenuRoute[] }
         this.state = {
             routes: props.route.children
         };
+
     }
     render() {
         return (
