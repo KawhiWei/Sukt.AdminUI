@@ -1,13 +1,12 @@
-import React from 'react';
+import { useEffect } from 'react';
 import ApplicationUserManager from '@/shared/ids4/identityServerLogin';
-class Login extends React.Component<{ history: any }> {
-  componentWillMount() {
+const Login = (props: { history: any }) => {
+  useEffect(() => {
     ApplicationUserManager.Login();
-  }
-  render() {
-    return (
-      <></>
-    )
-  }
+  }, [props])
+  return (
+    <></>
+  )
 }
+
 export default Login;

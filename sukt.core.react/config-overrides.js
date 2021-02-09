@@ -4,10 +4,24 @@ const {
   addLessLoader, // less配置函数
   // fixBabelImports, // 按需加载配置函数
   addWebpackAlias, // /路径别名
-  // overrideDevServer
+  overrideDevServer
 } = require('customize-cra');
 const path = require("path");
-// const { name } = require("./package");
+const { name } = require("./package");
+const addProxy = () => (configFunction) => {
+  configFunction.proxy = {
+    "/api": {
+      // 目标代理服务器地址
+      target: process.env.REACT_APP_BASE_URL,
+      // 允许跨域
+      changeOrigin: true,
+      pathRewrite: { "^/api": "/api" }
+    }
+  };
+
+  return configFunction;
+}
+
 module.exports = {
   webpack: override(
     addDecoratorsLegacy(),
@@ -34,10 +48,10 @@ module.exports = {
     }),
     (config) => {
 
-      // config.output.library = `${name}`;
-      // config.output.libraryTarget = "umd";
-      // config.output.jsonpFunction = `webpackJsonp_${name}`;
-      // config.output.globalObject = "window";
+      config.output.library = `${name}`;
+      config.output.libraryTarget = "umd";
+      config.output.jsonpFunction = `webpackJsonp_${name}`;
+      config.output.globalObject = "window";
 
       //修改、添加loader 配置 :
       // 所有的loaders规则是在config.module.rules(数组)的第二项
@@ -55,5 +69,8 @@ module.exports = {
       })
       return config
     },
+  ),
+  devServer:overrideDevServer (
+    addProxy()
   )
 }

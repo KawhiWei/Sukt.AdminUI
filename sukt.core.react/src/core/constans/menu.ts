@@ -1,13 +1,5 @@
-import { IMenuOpInst } from "../domain/menu-domain/entity/IMenu";
-
-export interface IMenu {
-  key: string;
-  title: string;
-  path: string;
-  children: IMenu[];
-  icon?: string;
-}
-export const menuList: IMenuOpInst[] = [
+import { IMenuOutput } from "../domain/menu-domain/entity/IMenu";
+export const menuList: IMenuOutput[] = [
   {
     id: "13245",
     name: "主页",
@@ -19,12 +11,11 @@ export const menuList: IMenuOpInst[] = [
     parentId: "000",
     icon: "",
     parentNumber: "",
-    eName: "",
     microName: "",
     componentName: "home",
     sort: 0,
     isShow: true,
-    menuEnum: 0,
+    type: 0,
     children: [],
   },
   {
@@ -38,12 +29,11 @@ export const menuList: IMenuOpInst[] = [
     parentId: "000",
     icon: "",
     parentNumber: "",
-    eName: "",
     microName: "",
     componentName: "test-page",
     sort: 0,
     isShow: true,
-    menuEnum: 0,
+    type: 0,
     children: [],
   }
 ]

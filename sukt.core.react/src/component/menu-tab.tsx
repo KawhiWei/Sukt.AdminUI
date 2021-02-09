@@ -1,15 +1,15 @@
 import { Menu } from "antd";
-import { IMenuOpInst } from "@/core/domain/menu-domain/entity/IMenu";
+import { IMenuOutput } from "@/core/domain/menu-domain/entity/IMenu";
 import React from "react";
 import { Link } from 'react-router-dom';
-const isShow = (_children: IMenuOpInst[]) => {
+const isShow = (_children: IMenuOutput[]) => {
   return _children && _children.length > 0;
 }
 interface IProp {
-  menus: IMenuOpInst[]
+  menus: IMenuOutput[]
 }
 class Menus extends React.Component<IProp, any> {
-  renderMenu = (data: IMenuOpInst[]) => {
+  renderMenu = (data: IMenuOutput[]) => {
     return data.map(item => {
       if (isShow(item.children)) {
         return <Menu.SubMenu key={item.id} title={item.name}>
@@ -37,5 +37,4 @@ class Menus extends React.Component<IProp, any> {
     )
   }
 }
-
 export default Menus;

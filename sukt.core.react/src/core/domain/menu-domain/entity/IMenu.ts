@@ -1,5 +1,6 @@
 import * as MenuEnum from "@/core/constans/enum/menu";
 import { ESort } from "@/shared/enum";
+import { IEntity } from "@/shared/entity"
 export interface IMenuStuff {
   /**
    * 菜单类型
@@ -18,7 +19,7 @@ export interface IMenuStuff {
 export interface IRouteMeta {
   title: string;
 }
-export interface IRoute {
+export interface IRoute extends IEntity<string> {
   /**
    * 菜单名
    */
@@ -30,11 +31,12 @@ export interface IRoute {
   /**
    * 对应组件
    */
-  component:string;
+  component: string;
   /**
    * 组件名
    */
   componentName: string;
+
   meta?: IMetaBase;
 }
 export interface IMetaBase {
@@ -56,10 +58,9 @@ export interface IMenuOther {
   /**
    * 菜单类型
    */
-  menuEnum: MenuEnum.EMenuType;
+  type: MenuEnum.EMenuType;
 }
 export interface IMenu extends IRoute, IMenuOther {
-  id: string;
   /**
    * 菜单父级Id
    */
@@ -76,27 +77,29 @@ export interface IMenu extends IRoute, IMenuOther {
    * 当前菜单对应的子应用
    */
   microName: string;
-  /**
-   * 英文名
-   */
-  eName: string;
+  // /**
+  //  * 英文名
+  //  */
+  // eName: string;
 }
+
+
 /**
  * 菜单配置实例
  */
-export interface IMenuOpInst extends IMenu {
+export interface IMenuOutput extends IMenu {
   /**
    * 子级
    */
-  children: IMenuOpInst[];
+  children: IMenuOutput[];
   /**
    * tab页
    */
-  tabs: IMenuOpInst[];
+  tabs: IMenuOutput[];
   /**
    * 按钮列表
    */
-  buttons: IMenuOpInst[];
+  buttons: IMenuOutput[];
 }
 /**
  * 全局菜单接口
@@ -109,17 +112,16 @@ export interface IMenuInfo {
   /**
    * 菜单子项列表
    */
-  menuItemList: IMenuOpInst[];
+  menuItemList: IMenuOutput[];
 }
 
 
-export interface IMenuRoute {
-  id: string;
+export interface IMenuRoute extends IEntity<string> {
   name: string;
   path: string;
   component?: any;
   exact?: boolean;
   redirect?: string;
   children: IMenuRoute[];
-  isShow:boolean;
+  isShow: boolean;
 }

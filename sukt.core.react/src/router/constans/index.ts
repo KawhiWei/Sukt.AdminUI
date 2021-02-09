@@ -1,24 +1,19 @@
-import { IMenuOpInst } from "@/core/domain/menu-domain/entity/IMenu";
-export const routes: IMenuOpInst[] = [
+import NotFound from "@/router/constans/notFound";
+import Login from "@/router/constans/login";
+import HomePage from "@/pages/home-page/home-page";
+import { Guid } from "guid-typescript";
+export const routes = [
   {
-    id: "132445765",
-    name: "測試",
-    path: "/test-page",
-    component: "pages/test-page/test-page",
-    tabs: [],
-    buttonClick: "",
-    buttons: [],
-    parentId: "000",
-    icon: "",
-    parentNumber: "",
-    eName: "",
-    microName: "",
-    componentName: "test-page",
-    sort: 0,
+    id: Guid.create().toString(),
+    name: "主页",
+    path: "/home",
+    component: HomePage,
     isShow: true,
-    menuEnum: 0,
+    exact: true,
     children: [],
-  }
+  },
+  ...Login,
+  ...NotFound
 ]
 
 export default routes;

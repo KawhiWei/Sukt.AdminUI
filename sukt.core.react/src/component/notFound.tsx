@@ -1,11 +1,6 @@
-import React from "react";
-
-class NotFound extends React.Component {
-  render() {
-    return (
-      <div>404</div>
-    )
-  }
+const NotFound = () => {
+  return (
+    <div>未找到该网页！</div>
+  )
 }
-
 export default NotFound;

@@ -3,10 +3,15 @@ import { Guid } from "guid-typescript";
 import { asyncComponent as async } from "./asyncComponent";
 import LayoutView from "@/layout/layout-view";
 import HomePage from "@/pages/home-page/home-page";
-import { IMenuOpInst, IMenuRoute } from '@/core/domain/menu-domain/entity/IMenu';
+import { IMenuOutput, IMenuRoute } from '@/core/domain/menu-domain/entity/IMenu';
 import { renderRoutes } from "react-router-config";
 import store from '@/store';
-import { Redirect, Route } from 'react-router-dom';
+import { Redirect, Route, withRouter } from 'react-router-dom';
+import { IMenuService } from '@/core/domain/menu-domain/service/IMenuService';
+import { IocTypes } from '@/shared/config/ioc-types';
+import IocProvider from '@/shared/utils/ioc-provider';
+import { message } from 'antd';
+import { USER_MENU } from '@/store/actionType';
 
 const Main: IMenuRoute[] = [
   {
@@ -17,21 +22,22 @@ const Main: IMenuRoute[] = [
     isShow: false,
     children: [
       {
-        id: "13245",
+        id: Guid.create().toString(),
         name: "主页",
         path: "/home",
         component: HomePage,
         isShow: true,
+        exact: true,
         children: [],
       }
     ]
   }
 ]
-interface IProp {
-  config: IMenuRoute[]
-}
-class RouteAuth extends React.Component<IProp> {
-  handleRouters(menu: IMenuOpInst[]) {
+
+class RouteAuth extends React.Component<any> {
+  @IocProvider(IocTypes.MenuService)
+  private menus!: IMenuService;
+  private handleRouters(menu: IMenuOutput[]) {
     let childRouter: IMenuRoute[] = [];
     menu.forEach((item) => {
       if (!!item.children && item.children.length) {
@@ -45,17 +51,37 @@ class RouteAuth extends React.Component<IProp> {
     })
     return childRouter
   }
-  filterMain() {
-    const menu: IMenuOpInst[] = store.getState().user.menu;
+  private filterMain() {
+    const menu: IMenuOutput[] = store.getState().user.menu;
     const menus = this.handleRouters(menu);
     Main[0].children = [...Main[0].children, ...menus];
   }
+  async getMenus() {
+    try {
+      // let res = await this.menus.getMenus();
+      // if (res.success) {
+      // this.menus.setMenus(res.data);
+      await store.dispatch({
+        type: USER_MENU,
+        // data: this.menus.menusByShow
+        data: require("@/core/constans/menu").menuList
+      })
+      // message.success(res.message);
+      // } else {
+      //   message.error(res.message);
+      // }
+
+    } catch (error) {
+      message.error(error);
+    }
+  }
   render() {
-    const { config } = this.props;
-    const { pathname } = window.location;
+    const { config, location } = this.props;
+    const { pathname } = location;
     const targetRouterConfig = config.find((item: IMenuRoute) => item.path === pathname);
     const token = localStorage.getItem("token");
     if (!!token) {
+      this.getMenus();
       if (pathname === "/login" || pathname === "/") {
         if (Main[0].children.length === 1) {
           this.filterMain();
@@ -64,6 +90,7 @@ class RouteAuth extends React.Component<IProp> {
             <Redirect to="/home" />
           </>)
         } else {
+
           return <Redirect to="/home" />
         }
       } else {
@@ -90,7 +117,7 @@ class RouteAuth extends React.Component<IProp> {
             return (
               <>
                 {config.map((route: IMenuRoute) => {
-                  return  <Route exact={true} key={route.id} path={route.path} component={route.component}/>
+                  return <Route exact={true} key={route.id} path={route.path} component={route.component} />
                 })}
                 <Redirect to='/404' />
               </>
@@ -100,22 +127,22 @@ class RouteAuth extends React.Component<IProp> {
 
       }
     } else {  // 非登录状态
-      if(pathname.includes("callback")){
-        const {hash} = window.location;
+      if (pathname.includes("callback")) {
+        const { hash } = location;
         const path = `${pathname}${hash}`
         return (
           <>
             {config.map((route: IMenuRoute) => {
-              return  <Route exact={true} key={route.id} path={route.path} component={route.component}/>
+              return <Route exact={true} key={route.id} path={route.path} component={route.component} />
             })}
-            <Redirect to={path}/>
+            <Redirect to={path} />
           </>
         )
       } else {
         return (
           <>
             {config.map((route: IMenuRoute) => {
-              return  <Route exact={true} key={route.id} path={route.path} component={route.component}/>
+              return <Route exact={true} key={route.id} path={route.path} component={route.component} />
             })}
             <Redirect to='/login' />
           </>
@@ -125,4 +152,4 @@ class RouteAuth extends React.Component<IProp> {
     }
   }
 }
-export default RouteAuth;
+export default withRouter(RouteAuth);

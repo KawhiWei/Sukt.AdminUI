@@ -7,18 +7,6 @@ const routes = [
   ...Login,
   ...NotFound
 ];
-// function BasicRoute() {
-// 	return (
-// 		<BrowserRouter>
-// 			<Switch>
-// 				<Suspense fallback={<div>Loading...</div>}>
-// 					<RouterAuth config={routes} />
-// 				</Suspense>
-// 			</Switch>
-// 		</BrowserRouter>
-// 	)
-// }
-
 
 class BasicRoute extends React.Component {
   render() {
