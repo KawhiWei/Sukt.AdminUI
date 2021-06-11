@@ -14,7 +14,9 @@
     "no-unused-expressions":false,
     "no-empty-interface":false,
     "no-unused-expression":false,
-    "max-classes-per-file":false
+    "max-classes-per-file":false,
+    "no-unused-vars": "off",
+      "@typescript-eslint/no-unused-vars": ["off"]
   },
   "linterOptions": {
     "exclude": [
