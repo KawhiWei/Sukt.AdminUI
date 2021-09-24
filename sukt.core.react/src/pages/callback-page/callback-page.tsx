@@ -1,9 +1,11 @@
-import { useEffect, useState } from 'react';
-import ApplicationUserManager from '@/shared/ids4/identityServerLogin';
-import { Spin, message } from 'antd';
 import "./callback-page.less";
-import { IocTypes } from '@/shared/config/ioc-types';
+
+import { Spin, message } from 'antd';
+import { useEffect, useState } from 'react';
+
+import ApplicationUserManager from '@/shared/ids4/identityServerLogin';
 import { IMenuService } from '@/core/domain/menu-domain/service/IMenuService';
+import { IocTypes } from '@/shared/config/ioc-types';
 import useProvider from '@/shared/customHooks/provider';
 
 const CallbackPage = (props: { history: any }) => {
@@ -31,7 +33,7 @@ const CallbackPage = (props: { history: any }) => {
         message.error(res.message);
       }
 
-    } catch (error) {
+    } catch (error:any) {
       message.error(error);
     }
   }

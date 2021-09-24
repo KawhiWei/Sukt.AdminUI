@@ -1,17 +1,18 @@
-import React from 'react';
-import { Guid } from "guid-typescript";
-import { asyncComponent as async } from "./asyncComponent";
-import LayoutView from "@/layout/layout-view";
-import HomePage from "@/pages/home-page/home-page";
 import { IMenuOutput, IMenuRoute } from '@/core/domain/menu-domain/entity/IMenu';
+import { Redirect, Route, withRouter } from 'react-router-dom';
+
+import { Guid } from "guid-typescript";
+import HomePage from "@/pages/home-page/home-page";
+import { IMenuService } from '@/core/domain/menu-domain/service/IMenuService';
+import IocProvider from '@/shared/utils/ioc-provider';
+import { IocTypes } from '@/shared/config/ioc-types';
+import LayoutView from "@/layout/layout-view";
+import React from 'react';
+import { USER_MENU } from '@/store/actionType';
+import { asyncComponent as async } from "./asyncComponent";
+import { message } from 'antd';
 import { renderRoutes } from "react-router-config";
 import store from '@/store';
-import { Redirect, Route, withRouter } from 'react-router-dom';
-import { IMenuService } from '@/core/domain/menu-domain/service/IMenuService';
-import { IocTypes } from '@/shared/config/ioc-types';
-import IocProvider from '@/shared/utils/ioc-provider';
-import { message } from 'antd';
-import { USER_MENU } from '@/store/actionType';
 
 const Main: IMenuRoute[] = [
   {
@@ -71,7 +72,7 @@ class RouteAuth extends React.Component<any> {
       //   message.error(res.message);
       // }
 
-    } catch (error) {
+    } catch (error:any) {
       message.error(error);
     }
   }
