@@ -1,7 +1,8 @@
-import { Menu } from "antd";
-import { IMenuOutput } from "@/core/domain/menu-domain/entity/IMenu";
-import React from "react";
+import { IMenuOutput } from "@/shared/menu/IMenu";
 import { Link } from 'react-router-dom';
+import { Menu } from "antd";
+import React from "react";
+
 const isShow = (_children: IMenuOutput[]) => {
   return _children && _children.length > 0;
 }

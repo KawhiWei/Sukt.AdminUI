@@ -1,11 +1,14 @@
-import { injectable } from "inversify";
 import "reflect-metadata";
-import * as MenuInterface from "@/core/domain/menu-domain/entity/IMenu";
-import { IMenuService } from "./IMenuService";
-import { menuList } from "@/core/constans/menu";
-import { IServerReturn } from "@/shared/entity";
-import BaseService from "@/shared/service/BaseService/BaseService";
-import { MenuApi } from "@/core/constans/api";
+
+import * as MenuInterface from "../../../../../shared/menu/IMenu";
+
+import BaseService from "../../../../../shared/service/BaseService/BaseService";
+import { IMenuService } from "./imenu-service";
+import { IServerReturn } from "../../../../../shared/entity";
+import { MenuApi } from "../../../../constans/api";
+import { injectable } from "inversify";
+import { menuList } from "../../../..//constans/menu";
+
 @injectable()
 export default class MenuService extends BaseService implements IMenuService {
   //#region 【properties】

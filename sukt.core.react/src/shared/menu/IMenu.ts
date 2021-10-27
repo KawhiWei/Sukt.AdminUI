@@ -1,6 +1,8 @@
-import * as MenuEnum from "@/core/constans/enum/menu";
-import { ESort } from "@/shared/enum";
-import { IEntity } from "@/shared/entity"
+import * as MenuEnum from "../../core/constans/enum/menu";
+
+import { ESort } from "../enum";
+import { IEntity } from "../entity"
+
 export interface IMenuStuff {
   /**
    * 菜单类型

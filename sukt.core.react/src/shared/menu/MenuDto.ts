@@ -1,7 +1,10 @@
-import * as MenuEnum from "@/core/constans/enum/menu";
-import { ESort } from "@/shared/enum";
+import * as MenuEnum from  "../../core/constans/enum/menu";
+
+import { IMenuOther, IMenuStuff, IRoute, IRouteMeta } from "./IMenu";
+
+import { ESort } from "../enum";
 import { Guid } from "guid-typescript";
-import { IMenuStuff, IRouteMeta, IRoute, IMenuOther } from "./IMenu";
+
 export class MenuStuff implements IMenuStuff {
   mode: MenuEnum.EMenuMode = MenuEnum.EMenuMode.vertical;
   accordion: boolean = true;

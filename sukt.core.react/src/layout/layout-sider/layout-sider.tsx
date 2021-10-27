@@ -1,7 +1,8 @@
-import React from 'react';
+import { IMenuOutput } from '@/shared/menu/IMenu';
 import { Layout } from 'antd';
 import Menus from "@/component/menu-tab";
-import { IMenuOutput } from '@/core/domain/menu-domain/entity/IMenu';
+import React from 'react';
+
 const LayoutSider = (props: { menus: IMenuOutput[] }) => {
   return (
     <Layout.Sider>

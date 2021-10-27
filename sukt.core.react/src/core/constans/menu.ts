@@ -1,4 +1,5 @@
-import { IMenuOutput } from "../domain/menu-domain/entity/IMenu";
+import { IMenuOutput } from "@/shared/menu/IMenu";
+
 export const menuList: IMenuOutput[] = [
   {
     id: "13245",
@@ -20,8 +21,8 @@ export const menuList: IMenuOutput[] = [
   },
   {
     id: "132445765",
-    name: "測試",
-    path: "/test-page",
+    name: "系统管理",
+    path: "/systemsetting",
     component: "pages/test-page/test-page",
     tabs: [],
     buttonClick: "",
@@ -34,6 +35,23 @@ export const menuList: IMenuOutput[] = [
     sort: 0,
     isShow: true,
     type: 0,
-    children: [],
+    children: [{
+      id: "121212",
+      name: "菜单管理",
+      path: "/menu",
+      component: "pages/test-page/test-page",
+      tabs: [],
+      buttonClick: "",
+      buttons: [],
+      parentId: "000",
+      icon: "",
+      parentNumber: "",
+      microName: "",
+      componentName: "test-page",
+      sort: 0,
+      isShow: true,
+      type: 0,
+      children: [],
+    }],
   }
 ]

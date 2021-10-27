@@ -1,9 +1,8 @@
-import { IMenuOutput, IMenuRoute } from '@/core/domain/menu-domain/entity/IMenu';
+import { IMenuOutput, IMenuRoute } from '@/shared/menu/IMenu';
 import { Redirect, Route, withRouter } from 'react-router-dom';
 
 import { Guid } from "guid-typescript";
 import HomePage from "@/pages/home-page/home-page";
-import { IMenuService } from '@/core/domain/menu-domain/service/IMenuService';
 import IocProvider from '@/shared/utils/ioc-provider';
 import { IocTypes } from '@/shared/config/ioc-types';
 import LayoutView from "@/layout/layout-view";
@@ -14,6 +13,7 @@ import { message } from 'antd';
 import { renderRoutes } from "react-router-config";
 import store from '@/store';
 
+// import { IMenuService } from '@/core/domain/menu-domain/service/IMenuService';
 const Main: IMenuRoute[] = [
   {
     id: Guid.EMPTY,
@@ -36,8 +36,8 @@ const Main: IMenuRoute[] = [
 ]
 
 class RouteAuth extends React.Component<any> {
-  @IocProvider(IocTypes.MenuService)
-  private menus!: IMenuService;
+  // @IocProvider(IocTypes.MenuService)
+  // private menus!: IMenuService;
   private handleRouters(menu: IMenuOutput[]) {
     let childRouter: IMenuRoute[] = [];
     menu.forEach((item) => {

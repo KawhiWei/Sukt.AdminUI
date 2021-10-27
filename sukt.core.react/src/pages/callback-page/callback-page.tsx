@@ -4,12 +4,11 @@ import { Spin, message } from 'antd';
 import { useEffect, useState } from 'react';
 
 import ApplicationUserManager from '@/shared/ids4/identityServerLogin';
-import { IMenuService } from '@/core/domain/menu-domain/service/IMenuService';
 import { IocTypes } from '@/shared/config/ioc-types';
 import useProvider from '@/shared/customHooks/provider';
 
 const CallbackPage = (props: { history: any }) => {
-  const menus: IMenuService = useProvider(IocTypes.MenuService);
+  // const menus: IMenuService = useProvider(IocTypes.MenuService);
   const [loading, setLoad] = useState(true);
   const loginCallbackFn = async () => {
     await ApplicationUserManager.signinRedirectCallback();
@@ -24,18 +23,18 @@ const CallbackPage = (props: { history: any }) => {
   }
 
   const getMenus = async () => {
-    try {
-      const res = await menus.getMenus();
-      if (res.success) {
-        menus.setMenus(res.data);
-        message.success(res.message);
-      } else {
-        message.error(res.message);
-      }
+    // try {
+    //   const res = await menus.getMenus();
+    //   if (res.success) {
+    //     menus.setMenus(res.data);
+    //     message.success(res.message);
+    //   } else {
+    //     message.error(res.message);
+    //   }
 
-    } catch (error:any) {
-      message.error(error);
-    }
+    // } catch (error:any) {
+    //   message.error(error);
+    // }
   }
   useEffect(() => {
     loginCallbackFn();

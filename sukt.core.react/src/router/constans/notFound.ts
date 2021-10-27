@@ -1,6 +1,6 @@
-import NotFoundView from "@/component/notFound";
-import { IMenuRoute } from "@/core/domain/menu-domain/entity/IMenu";
 import { Guid } from "guid-typescript";
+import { IMenuRoute } from "@/shared/menu/IMenu";
+import NotFoundView from "@/component/notFound";
 
 const notFound: IMenuRoute[] = [
   {

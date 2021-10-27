@@ -1,3 +1,3 @@
 export const IocTypes = {
-  MenuService: Symbol("MenuService"),
+  // MenuService: Symbol("MenuService"),
 };

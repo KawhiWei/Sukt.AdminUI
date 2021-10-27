@@ -1,5 +1,7 @@
-import * as MenuInterface from "@/core/domain/menu-domain/entity/IMenu";
-import { IServerReturn } from "@/shared/entity";
+import * as MenuInterface from "../../../../../shared/menu/IMenu";
+
+import { IServerReturn } from "../../../../../shared/entity";
+
 export interface IMenuService {
   //#region 【properties】
   // 菜单列表

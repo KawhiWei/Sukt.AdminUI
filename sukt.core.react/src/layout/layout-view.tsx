@@ -1,13 +1,15 @@
-import React from 'react'
 import "./layout-view.less";
-import { Layout } from 'antd';
-import Layoutheader from './layout-header/layout-header';
-import LayoutSider from "./layout-sider/layout-sider";
-import { IMenuRoute } from '@/core/domain/menu-domain/entity/IMenu';
-import { renderRoutes } from 'react-router-config';
-import { menuList } from "@/core/constans/menu";
+
 import { BrowserRouter } from 'react-router-dom';
+import { IMenuRoute } from '@/shared//menu/IMenu';
+import { Layout } from 'antd';
+import LayoutSider from "./layout-sider/layout-sider";
+import Layoutheader from './layout-header/layout-header';
+import React from 'react'
+import { menuList } from "@/core/constans/menu";
+import { renderRoutes } from 'react-router-config';
 import { useState } from 'react';
+
 interface IProp {
     route: IMenuRoute;
     location: any;
