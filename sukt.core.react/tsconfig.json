@@ -1,5 +1,9 @@
 {
   "extends": "./paths.json",
+  "rules": {
+    "no-template-curly-in-string": "off",
+    "react-hooks/exhaustive-deps": "off"
+  },
   "compilerOptions": {
     "experimentalDecorators": true,
     "target": "es5",

@@ -2,23 +2,42 @@ import "reflect-metadata";
 
 import * as MenuInterface from "../../../../../shared/menu/IMenu";
 
+import { IBusinessMenuDto, MenuInputDto } from "../menu-entity";
+import { IServerPageReturn, IServerReturn } from "../../../../../shared/entity";
+
 import BaseService from "../../../../../shared/service/BaseService/BaseService";
 import { IMenuService } from "./imenu-service";
-import { IServerReturn } from "../../../../../shared/entity";
 import { MenuApi } from "../../../../constans/api";
 import { injectable } from "inversify";
 import { menuList } from "../../../..//constans/menu";
 
 @injectable()
 export default class MenuService extends BaseService implements IMenuService {
+  delete(_id: string): Promise<IServerPageReturn<any>> {
+    return this.dataRequest.deleteRequest(`${MenuApi.deleteMenu}/${_id}`)
+  }
+  gettable(): Promise<IServerPageReturn<IBusinessMenuDto>> {
+    return this.dataRequest.getRequest(MenuApi.gettable)
+  }
+  create(_param: MenuInputDto): Promise<IServerReturn<any>> {
+    return this.dataRequest.postRequest(MenuApi.createMenu, _param)
+  }
+  update(_id:string,_param: MenuInputDto): Promise<IServerReturn<any>> {
+    return this.dataRequest.postRequest(`${MenuApi.updateMenu}/${_id}`, _param)
+  }
+  getloadRow(_id:string): Promise<IServerReturn<any>> {
+    return this.dataRequest.getRequest(`${MenuApi.getloadRowById}/${_id}`)
+  }
   //#region 【properties】
   menuArr: MenuInterface.IMenuOutput[] = [];
   currentMenu?: MenuInterface.IMenuOutput | undefined;
   menusByShow: MenuInterface.IMenuOutput[] = [];
   //#endregion
 
-  //#region 【methods】
-
+  /**
+   * 
+   * @returns 
+   */
   getMenus(): Promise<IServerReturn<MenuInterface.IMenuOutput[]>> {
     return this.dataRequest.getRequest(MenuApi.getRouteMenuByUser);
   }

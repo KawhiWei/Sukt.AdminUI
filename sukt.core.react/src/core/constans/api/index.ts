@@ -1,7 +1,9 @@
 export const MenuApi = {
-  createMenuItem: "/api/Menu/CreateAsync",
-  updateMenuItem: "/api/Menu/UpdateAsync",
-  getMenuItemById: "/api/Menu/GetLoadFromMenuAsync",
+  createMenu: "/menu/createAsync",
+  updateMenu: "/menu/updateAsync",
+  deleteMenu: "/menu/DeleteAsync",
+  gettable: "/menu/GetMenuTableAsync",
+  getloadRowById: "/menu/GetLoadFromMenuAsync",
   // deleteMenuById:"/api/Menu",
-  getRouteMenuByUser: "/api/Menu/GetUserMenuTreeAsync"
+  getRouteMenuByUser: "/Menu/GetUserMenuTreeAsync"
 }

@@ -46,7 +46,9 @@
     ],
     "rules": {
       "no-unused-vars":"off",
-      "@typescript-eslint/no-unused-vars": "off"
+      "@typescript-eslint/no-unused-vars": "off",
+      "no-template-curly-in-string": "off",
+      "react-hooks/exhaustive-deps": "off"
     }
   },
   "browserslist": {
