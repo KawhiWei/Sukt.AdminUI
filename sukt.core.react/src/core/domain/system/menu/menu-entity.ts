@@ -75,7 +75,7 @@ export class MenuInputDto implements IBusinessMenuBase {
     icon: string="";
     parentNumber: string="";
     microName: string="";
-    isShow: boolean=false;
+    isShow: boolean=true;
     sort: number=0;
     buttonClick: string="";
     type: MenuEnum.EMenuType= MenuEnum.EMenuType.Menu;

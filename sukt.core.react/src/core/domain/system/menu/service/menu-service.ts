@@ -23,7 +23,7 @@ export default class MenuService extends BaseService implements IMenuService {
     return this.dataRequest.postRequest(MenuApi.createMenu, _param)
   }
   update(_id:string,_param: MenuInputDto): Promise<IServerReturn<any>> {
-    return this.dataRequest.postRequest(`${MenuApi.updateMenu}/${_id}`, _param)
+    return this.dataRequest.putRequest(`${MenuApi.updateMenu}/${_id}`, _param)
   }
   getloadRow(_id:string): Promise<IServerReturn<any>> {
     return this.dataRequest.getRequest(`${MenuApi.getloadRowById}/${_id}`)

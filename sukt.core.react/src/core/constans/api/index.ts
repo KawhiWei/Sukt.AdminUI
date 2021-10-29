@@ -7,3 +7,10 @@ export const MenuApi = {
   // deleteMenuById:"/api/Menu",
   getRouteMenuByUser: "/Menu/GetUserMenuTreeAsync"
 }
+export const UserApi = {
+  create: "/User/createAsync",
+  update: "/User/updateAsync",
+  delete: "/User/DeleteAsync",
+  getpage: "/User/GetPageAsync",
+  getloadRowById: "/User/LoadFormAsync",
+}

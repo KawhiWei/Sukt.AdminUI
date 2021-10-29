@@ -12,7 +12,6 @@ import { OperationTypeEnum } from "@/shared/operation/operationType";
 import useHookProvider from "@/shared/customHooks/ioc-hook-provider";
 
 interface IProp {
-    Config: IOperationConfig,
     /**
      * 
      */
@@ -44,7 +43,7 @@ const MenuOperation = (props: IProp) => {
     const [operationState, setOperationState] = useState<IOperationConfig>({ visible: false })
     const [initformData, setinitformData] = useState<MenuInputDto>(new MenuInputDto());
     const [formData] = Form.useForm();
-    const [currentId, setcurrentId] = useState<string>();
+    const [currentId, setcurrentId] = useState<string>("");
     /**
      * 操作类型
      */
@@ -62,7 +61,7 @@ const MenuOperation = (props: IProp) => {
                     formData.setFieldsValue(initformData);
                     break;
                 case OperationTypeEnum.edit:
-                    setcurrentId(_id);
+                    _id && setcurrentId(_id);
                     _id && onGetLoad(_id);
                     break;
                 case OperationTypeEnum.view:
@@ -79,6 +78,9 @@ const MenuOperation = (props: IProp) => {
     const editOperationState = (_visible: boolean, _title?: string) => {
         setOperationState({ visible: _visible, title: _title });
     }
+    /**
+     * 弹框取消事件
+     */
     const onCancel = () => {
         editOperationState(false)
     };
@@ -86,16 +88,18 @@ const MenuOperation = (props: IProp) => {
      * 编辑获取一个表单
      * @param _id 
      */
-    const onGetLoad=(_id:string)=>{
-        _menuservice.getloadRow(_id).then(res=>{
-            if(res.success)
-            {
+    const onGetLoad = (_id: string) => {
+        _menuservice.getloadRow(_id).then(res => {
+            if (res.success) {
                 console.log(res);
                 formData.setFieldsValue(res.data);
                 editOperationState(true, "查看")
             }
         })
     }
+    /**
+     * 底部栏OK事件
+     */
     const onOk = () => {
         let param = formData.getFieldsValue();
         switch (operationType) {
@@ -103,6 +107,7 @@ const MenuOperation = (props: IProp) => {
                 onCreate(param);
                 break;
             case OperationTypeEnum.edit:
+                onEdit(param);
                 break;
             case OperationTypeEnum.view:
                 break;
@@ -111,6 +116,10 @@ const MenuOperation = (props: IProp) => {
     const onFinish = (values: any) => {
         console.log(values);
     };
+    /**
+     * 添加菜单
+     * @param _data 
+     */
     const onCreate = (_data: MenuInputDto) => {
         _menuservice.create(_data).then(res => {
             if (res.success) {
@@ -120,9 +129,22 @@ const MenuOperation = (props: IProp) => {
             }
         })
     }
+    /**
+     * 修改保存
+     * @param _data 
+     */
+    const onEdit = (_data: MenuInputDto) => {
+        _menuservice.update(currentId, _data).then(res => {
+            if (res.success) {
+                setOperationState({ visible: false })
+                message.success(res.message, 3)
+                props.onCallbackEvent && props.onCallbackEvent();
+            }
+        })
+    }
     return (
         <div>
-            <Modal width={1000} getContainer={false} title={operationState.title} closable={false} visible={operationState.visible} onCancel={onCancel} onOk={onOk}
+            <Modal width={1000} getContainer={false} maskClosable={false} title={operationState.title} closable={false} visible={operationState.visible} onCancel={onCancel} onOk={onOk}
                 footer={[
                     <Button key="back" onClick={onCancel}>
                         取消
@@ -170,7 +192,10 @@ const MenuOperation = (props: IProp) => {
                             }
                         </Select>
                     </Form.Item>
-                    <Form.Item label="是否显示" name="isShow">
+                    <Form.Item
+                        label="是否显示"
+                        valuePropName="checked"
+                        name="isShow">
                         <Switch />
                     </Form.Item>
                     <Form.Item

@@ -18,12 +18,6 @@ import useHookProvider from "@/shared/customHooks/ioc-hook-provider";
  */
 const MenuPage = () => {
     const _menuservice: IMenuService = useHookProvider(IocTypes.MenuService);
-    const [OperationState, setOperationState] = useState<IOperationConfig>({
-        itemId: Guid.EMPTY,
-        title: "",
-        visible: false,
-        operationType: OperationTypeEnum.view
-    })
     const [loading, setloading] = useState<boolean>(false);
     const [pagination, setPagination] = useState<PaginationProps>(
         initPaginationConfig
@@ -71,7 +65,7 @@ const MenuPage = () => {
      * 渲染子组件
      */
     const renderOperation = useMemo(() => {
-        return (<MenuOperation Config={OperationState} operationRef={menuOperationRef} onCallbackEvent={getTable}></MenuOperation>)
+        return (<MenuOperation  operationRef={menuOperationRef} onCallbackEvent={getTable}></MenuOperation>)
     }, [])
     const [tableData, setTableData] = useState<Array<IBusinessMenuDto>>([{
         id: "121214545",
