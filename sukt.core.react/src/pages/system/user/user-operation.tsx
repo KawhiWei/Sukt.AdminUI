@@ -47,6 +47,7 @@ const UserOperation = (props: IProp) => {
     const _userservice: IUserService = useHookProvider(IocTypes.UserService);
     const [operationState, setOperationState] = useState<IOperationConfig>({ visible: false })
     const [initformData, setinitformData] = useState<UserInputDto>(new UserInputDto());
+    const [birthday, setBirthday] = useState<string>("");
     const [formData] = Form.useForm();
     const [currentId, setcurrentId] = useState<string>("");
     /**
@@ -65,7 +66,6 @@ const UserOperation = (props: IProp) => {
                     formData.setFieldsValue(initformData);
                     break;
                 case OperationTypeEnum.edit:
-                    debugger
                     _id && setcurrentId(_id);
                     _id && onGetLoad(_id);
                     break;
@@ -84,6 +84,13 @@ const UserOperation = (props: IProp) => {
         setOperationState({ visible: _visible, title: _title });
     }
     /**
+     * 因为antd 太辣鸡，导致没有办法直接在form表单使用string给表单加载日期，需要单独定义一个字段来转换从而产生了此方法
+     */
+    const editBirthday=(date:any, dateString:any)=>{
+        console.log(date,dateString)
+        setBirthday(dateString)
+    }
+    /**
      * 弹框取消事件
      */
     const onCancel = () => {
@@ -97,8 +104,7 @@ const UserOperation = (props: IProp) => {
         _userservice.getloadRow(_id).then(res => {
             if (res.success) {
                 console.log(res);
-                // res.data.birthday= moment(res.data.birthday) 
-                debugger
+                setBirthday(res.data.birthday)
                 formData.setFieldsValue(res.data);
                 editOperationState(true, "查看")
             }
@@ -109,13 +115,10 @@ const UserOperation = (props: IProp) => {
      * @param formfieldsValue 
      */
     const onFinish = (formfieldsValue: any) => {
-        debugger
-        let birthday = formfieldsValue['birthday'].format('YYYY-MM-DD');
-        debugger
         let param = new UserInputDto();
         param.normalizedUserName = formfieldsValue.normalizedUserName;
         param.userName = formfieldsValue.userName;
-        param.nikeName = formfieldsValue.nikeName;
+        param.nickName = formfieldsValue.nickName;
         param.phoneNumber = formfieldsValue.phoneNumber;
         param.email = formfieldsValue.email;
         param.idCard = formfieldsValue.idCard;
@@ -168,9 +171,7 @@ const UserOperation = (props: IProp) => {
     }
     return (
         <div>
-            <Modal width={1000} getContainer={false} maskClosable={false} title={operationState.title} closable={false} visible={operationState.visible}
-                footer={null}
-            >
+            <Modal width={1000} getContainer={false} maskClosable={false} title={operationState.title} closable={false} visible={operationState.visible} footer={null}>
                 <Form form={formData}
                     {...formItemLayout}
                     name="nest-messages"
@@ -210,7 +211,7 @@ const UserOperation = (props: IProp) => {
                         </Col>
                         <Col span="12">
                             <Form.Item
-                                name="nikeName"
+                                name="nickName"
                                 rules={[{ required: true }]}
                                 label="用户昵称">
                                 <Input />
@@ -256,9 +257,8 @@ const UserOperation = (props: IProp) => {
                     <Row>
                         <Col span="12">
                             <Form.Item
-                                name="birthday"
                                 label="生日">
-                                <DatePicker/>
+                                <DatePicker  onChange={editBirthday} value={moment(birthday, 'YYYY-MM-DD')}/>
                             </Form.Item>
                         </Col>
                         <Col span="12">

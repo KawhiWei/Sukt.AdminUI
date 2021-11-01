@@ -183,7 +183,14 @@ const MenuOperation = (props: IProp) => {
                         label="菜单icon">
                         <Input />
                     </Form.Item>
-                    <Form.Item label="类型">
+                    <Form.Item
+                        name="microName"
+                        label="菜单对应的子应用">
+                        <Input />
+                    </Form.Item>
+                    <Form.Item
+                        name="type"
+                        label="类型">
                         <Select>
                             {
                                 MenuTypeEnumList.map(item => {
@@ -197,11 +204,6 @@ const MenuOperation = (props: IProp) => {
                         valuePropName="checked"
                         name="isShow">
                         <Switch />
-                    </Form.Item>
-                    <Form.Item
-                        name="microName"
-                        label="菜单对应的子应用">
-                        <Input />
                     </Form.Item>
                     <Form.Item
                         name="sort"

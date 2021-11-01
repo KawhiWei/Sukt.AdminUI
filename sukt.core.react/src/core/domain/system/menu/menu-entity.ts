@@ -60,23 +60,23 @@ export interface IBusinessMenuBase {
  * (新增/修改/显示)菜单Dto
  */
 
-export interface IBusinessMenuDto extends IBusinessMenuBase,IEntity<string> {
+export interface IBusinessMenuDto extends IBusinessMenuBase, IEntity<string> {
 
 }
 /**
  * 菜单输入Dto实现
  */
 export class MenuInputDto implements IBusinessMenuBase {
-    name: string="";
-    path: string="";
-    component: string="";
-    componentName: string="";
-    parentId: string="";
-    icon: string="";
-    parentNumber: string="";
-    microName: string="";
-    isShow: boolean=true;
-    sort: number=0;
-    buttonClick: string="";
-    type: MenuEnum.EMenuType= MenuEnum.EMenuType.Menu;
+    name: string = "";
+    path: string = "";
+    component: string = "";
+    componentName: string = "";
+    parentId: string = "";
+    icon: string = "";
+    parentNumber: string = "";
+    microName: string = "";
+    isShow: boolean = true;
+    sort: number = 0;
+    buttonClick: string = "";
+    type: MenuEnum.EMenuType = MenuEnum.EMenuType.Menu;
 }

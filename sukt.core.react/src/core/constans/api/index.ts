@@ -14,3 +14,11 @@ export const UserApi = {
   getpage: "/User/GetPageAsync",
   getloadRowById: "/User/LoadFormAsync",
 }
+export const RoleApi = {
+  create: "/Role/createAsync",
+  update: "/Role/updateAsync",
+  delete: "/Role/DeleteAsync",
+  getpage: "/Role/GetPageAsync",
+  getloadRowById: "/Role/LoadFormAsync",
+}
+

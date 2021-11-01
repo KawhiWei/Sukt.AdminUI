@@ -16,7 +16,7 @@ export interface IBusinessUserBase {
     /**
      * 用户昵称
      */
-    nikeName: string;
+    nickName: string;
     /**
      * 电子邮箱
      */
@@ -77,7 +77,7 @@ export interface IBusinessUserDto extends IBusinessUserBase, IEntity<string> {
  * 用户输入Dto实现
  */
 export class UserInputDto implements IBusinessUserBase {
-    nikeName: string = "";
+    nickName: string = "";
     userName: string = "";
     normalizedUserName: string = "";
     email: string = "";
