@@ -186,7 +186,6 @@ const UserOperation = (props: IProp) => {
                                 <Input />
                             </Form.Item>
                         </Col>
-                        { }
                         <Col span="12">
                             {operationType === OperationTypeEnum.add &&
                                 (

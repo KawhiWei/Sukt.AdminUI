@@ -1,4 +1,4 @@
-import { IBusinessRoleBase, RoleInputDto } from "./role-entity";
+import { IBusinessRoleDto, RoleInputDto } from "./role-entity";
 import { IServerPageReturn, IServerReturn } from "../../../../shared/entity";
 
 export interface IRoleService {
@@ -15,7 +15,7 @@ export interface IRoleService {
   /**
    * 获取表格数据
    */
-   getpage(): Promise<IServerPageReturn<any>>;
+   getpage(_request?:any): Promise<IServerPageReturn<any>>;
   /**
    * 删除一行数据
    * @param _id 
@@ -25,5 +25,9 @@ export interface IRoleService {
    * 加载一行数据
    * @param _id 
    */
-  getloadRow(_id:string): Promise<IServerReturn<IBusinessRoleBase>> ;
+  getloadRow(_id:string): Promise<IServerReturn<IBusinessRoleDto>> ;
+  /**
+   * 获取所有角色列表
+   */
+  getseletedlist(): Promise<IServerReturn<Array<IBusinessRoleDto>>>;
 }

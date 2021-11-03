@@ -1,6 +1,7 @@
 import * as MenuEnum from "../../../core/constans/enum/menu";
 
 import { Button, Col, PaginationProps, Row, Table, Tag, message } from "antd";
+import { initPaginationConfig, tacitPagingProps } from "../../../shared/ajax/request"
 import { useEffect, useMemo, useRef, useState } from "react";
 
 import { Guid } from "guid-typescript";
@@ -10,7 +11,6 @@ import { IOperationConfig } from "@/shared/operation/operationConfig";
 import { IocTypes } from "@/shared/config/ioc-types";
 import MenuOperation from "./menu-operation";
 import { OperationTypeEnum } from "@/shared/operation/operationType";
-import { initPaginationConfig } from "../../../shared/ajax/request"
 import useHookProvider from "@/shared/customHooks/ioc-hook-provider";
 
 /**
@@ -19,9 +19,7 @@ import useHookProvider from "@/shared/customHooks/ioc-hook-provider";
 const MenuPage = () => {
     const _menuservice: IMenuService = useHookProvider(IocTypes.MenuService);
     const [loading, setloading] = useState<boolean>(false);
-    const [pagination, setPagination] = useState<PaginationProps>(
-        initPaginationConfig
-    );
+    const [paginationConfig, setPaginationConfig] = useState<initPaginationConfig>(new initPaginationConfig());
     /**
      * 父组件获取子组件所有内容
      */
@@ -31,14 +29,14 @@ const MenuPage = () => {
      */
     useEffect(() => {
         getTable();
-    }, [pagination]);
+    }, [paginationConfig]);
     /**
      * 页面初始化获取数据
      */
     const getTable = () => {
         _menuservice.gettable().then((x) => {
             if (x.success) {
-                setPagination((Pagination) => {
+                setPaginationConfig((Pagination) => {
                     Pagination.total = x.total;
                     return Pagination;
                 });
@@ -61,6 +59,18 @@ const MenuPage = () => {
         });
 
     };
+    const pagination: PaginationProps = {
+        ...tacitPagingProps,
+        total:paginationConfig.total,
+        current:paginationConfig.current,
+        pageSize:paginationConfig.pageSize,
+        onShowSizeChange: (current: number, pageSize: number) => {
+          
+        },
+        onChange: (page: number, pageSize?: number) => {
+          
+        }
+      };
     /**
      * 渲染子组件
      */

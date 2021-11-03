@@ -26,4 +26,14 @@ export interface IUserService {
    * @param _id 
    */
   getloadRow(_id:string): Promise<IServerReturn<IBusinessUserDto>> ;
+  /**
+   * 用户分配角色
+   * @param _id 
+   * @param _roleids 
+   */
+  userAllocationRole(_id: string,_roleids:Array<string>): Promise<IServerReturn<IBusinessUserDto>>;
+  /**
+   * 获取用户角色
+   */
+  getLoadUserRole(_id: string): Promise<IServerReturn<Array<string>>>;
 }

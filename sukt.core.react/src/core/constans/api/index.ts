@@ -13,6 +13,9 @@ export const UserApi = {
   delete: "/User/DeleteAsync",
   getpage: "/User/GetPageAsync",
   getloadRowById: "/User/LoadFormAsync",
+  allocationUserRole: "/UserRole/AllocationUserRoleAsync",
+  getLoadUserRole: "/UserRole/GetLoadUserRoleAsync",
+  
 }
 export const RoleApi = {
   create: "/Role/createAsync",
@@ -20,5 +23,7 @@ export const RoleApi = {
   delete: "/Role/DeleteAsync",
   getpage: "/Role/GetPageAsync",
   getloadRowById: "/Role/LoadFormAsync",
+  getseletedlist:"/Role/GetSelectedListAsync",
+
 }
 

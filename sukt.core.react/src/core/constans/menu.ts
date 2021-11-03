@@ -90,7 +90,7 @@ export const menuList: IMenuOutput[] = [
       children: [],
     },
     {
-      id: "1321313",
+      id: "132131312312",
       name: "角色管理",
       path: "/role",
       component: "pages/system/role/role-page",

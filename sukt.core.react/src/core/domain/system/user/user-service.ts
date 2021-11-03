@@ -25,4 +25,10 @@ export default class UserService extends BaseService implements IUserService {
   getloadRow(_id: string): Promise<IServerReturn<IBusinessUserDto>> {
     return this.dataRequest.getRequest(`${UserApi.getloadRowById}/${_id}`)
   }
+  userAllocationRole(_id: string,_roleids:Array<string>): Promise<IServerReturn<IBusinessUserDto>> {
+    return this.dataRequest.postRequest(`${UserApi.allocationUserRole}/${_id}`,_roleids)
+  }
+  getLoadUserRole(_id: string): Promise<IServerReturn<Array<string>>> {
+    return this.dataRequest.getRequest(`${UserApi.getLoadUserRole}/${_id}`)
+  }
 }
