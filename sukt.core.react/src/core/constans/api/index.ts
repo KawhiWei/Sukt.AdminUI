@@ -4,7 +4,7 @@ export const MenuApi = {
   deleteMenu: "/menu/DeleteAsync",
   gettable: "/menu/GetMenuTableAsync",
   getloadRowById: "/menu/GetLoadFromMenuAsync",
-  // deleteMenuById:"/api/Menu",
+  getTree:"/Menu/GetTreeAsync",
   getRouteMenuByUser: "/Menu/GetUserMenuTreeAsync"
 }
 export const UserApi = {
@@ -24,6 +24,7 @@ export const RoleApi = {
   getpage: "/Role/GetPageAsync",
   getloadRowById: "/Role/LoadFormAsync",
   getseletedlist:"/Role/GetSelectedListAsync",
-
+  allocationRoleMenu:"/RoleMenu/AllocationMenuAsync",
+  getallocationRoleMenu:"/RoleMenu/GetAllocationRoleMenuIdAsync",
 }
 

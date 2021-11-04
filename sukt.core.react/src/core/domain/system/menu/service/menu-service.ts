@@ -5,6 +5,7 @@ import * as MenuInterface from "../../../../../shared/menu/IMenu";
 import { IBusinessMenuDto, MenuInputDto } from "../menu-entity";
 import { IServerPageReturn, IServerReturn } from "../../../../../shared/entity";
 
+import { AntDesignTreeEntity } from "@/shared/entity/antdesign-tree-entity";
 import BaseService from "../../../../../shared/service/BaseService/BaseService";
 import { IMenuService } from "./imenu-service";
 import { MenuApi } from "../../../../constans/api";
@@ -13,6 +14,9 @@ import { menuList } from "../../../..//constans/menu";
 
 @injectable()
 export default class MenuService extends BaseService implements IMenuService {
+  getTree(): Promise<IServerReturn<AntDesignTreeEntity[]>> {
+    return this.dataRequest.getRequest(MenuApi.getTree)
+  }
   delete(_id: string): Promise<IServerPageReturn<any>> {
     return this.dataRequest.deleteRequest(`${MenuApi.deleteMenu}/${_id}`)
   }

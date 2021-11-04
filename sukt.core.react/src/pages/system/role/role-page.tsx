@@ -6,6 +6,7 @@ import { IBusinessRoleDto } from "../../../core/domain/system/role/role-entity";
 import { IRoleService } from "../../..//core/domain/system/role/irole-service";
 import { IocTypes } from "../../../shared/config/ioc-types";
 import { OperationTypeEnum } from "../../../shared/operation/operationType";
+import RoleAllocationMenu from "./role-allocationMenu";
 import RoleOperation from "./role-operation";
 import useHookProvider from "../../../shared/customHooks/ioc-hook-provider";
 
@@ -16,10 +17,12 @@ const RolePage = () => {
     const _roleservice: IRoleService = useHookProvider(IocTypes.RoleService);
     const [loading, setloading] = useState<boolean>(false);
     const [paginationConfig, setPaginationConfig] = useState<initPaginationConfig>(new initPaginationConfig());
+    const [tableData, setTableData] = useState<Array<IBusinessRoleDto>>([]);
     /**
      * 父组件获取子组件所有内容
      */
-    const menuOperationRef = useRef<any>();
+    const roleOperationRef = useRef<any>();
+    const roleAllocationMenuRef = useRef<any>();
     /**
      * 页面初始化事件
      */
@@ -107,6 +110,7 @@ const RolePage = () => {
             render: (text: any, record: IBusinessRoleDto) => {
                 return <div>
                     <Button type="primary" onClick={() => editRow(record.id)}>编辑</Button>
+                    <Button type="primary" onClick={() => roleAllocationMenu(record.id)}>分配菜单</Button>
                     <Button type="primary" danger onClick={() => deleteRow(record.id)}>删除</Button>
                 </div>
             }
@@ -116,18 +120,31 @@ const RolePage = () => {
      * 渲染子组件
      */
     const renderOperation = useMemo(() => {
-        return (<RoleOperation operationRef={menuOperationRef} onCallbackEvent={getTable}></RoleOperation>)
+        return (<RoleOperation operationRef={roleOperationRef} onCallbackEvent={getTable}></RoleOperation>)
     }, [])
-    const [tableData, setTableData] = useState<Array<IBusinessRoleDto>>([]);
+     /**
+     * 渲染子组件
+     */
+      const renderRoleAllocationMenu = useMemo(() => {
+        return (<RoleAllocationMenu operationRef={roleAllocationMenuRef} onCallbackEvent={getTable}></RoleAllocationMenu>)
+    }, [])
+
+    /**
+     * 分配菜單
+     * @param _id 
+     */
+     const roleAllocationMenu = (_id: any) => {
+        roleAllocationMenuRef.current && roleAllocationMenuRef.current.changeVal(_id);
+    }
     /**
      * 修改任务
      * @param _id 
      */
     const editRow = (_id: any) => {
-        menuOperationRef.current && menuOperationRef.current.changeVal(OperationTypeEnum.edit, _id);
+        roleOperationRef.current && roleOperationRef.current.changeVal(OperationTypeEnum.edit, _id);
     }
     const addChange = () => {
-        menuOperationRef.current && menuOperationRef.current.changeVal(OperationTypeEnum.add);
+        roleOperationRef.current && roleOperationRef.current.changeVal(OperationTypeEnum.add);
     }
     return (
         <div>
@@ -137,6 +154,7 @@ const RolePage = () => {
             </Row>
             <Table  bordered columns={columns} dataSource={tableData} loading={loading} pagination={pagination} />
             {renderOperation}
+            {renderRoleAllocationMenu}
         </div>)
 };
 export default RolePage;

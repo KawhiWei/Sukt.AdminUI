@@ -3,6 +3,8 @@ import * as MenuInterface from "../../../../../shared/menu/IMenu";
 import { IBusinessMenuDto, MenuInputDto } from "../menu-entity";
 import { IServerPageReturn, IServerReturn } from "../../../../../shared/entity";
 
+import { AntDesignTreeEntity } from "@/shared/entity/antdesign-tree-entity";
+
 export interface IMenuService {
   /**
    * 创建菜单
@@ -28,6 +30,10 @@ export interface IMenuService {
    * @param _id 
    */
   getloadRow(_id:string): Promise<IServerReturn<any>> ;
+  /**
+   * 获取树形
+   */
+  getTree(): Promise<IServerReturn<Array<AntDesignTreeEntity>>> ;
   //#region 【properties】
   // 菜单列表
   menuArr: MenuInterface.IMenuOutput[];

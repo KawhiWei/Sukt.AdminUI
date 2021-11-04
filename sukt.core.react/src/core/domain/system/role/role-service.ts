@@ -28,4 +28,10 @@ export default class RoleService extends BaseService implements IRoleService {
     getseletedlist(): Promise<IServerReturn<Array<IBusinessRoleDto>>> {
         return this.dataRequest.getRequest(`${RoleApi.getseletedlist}`)
     }
+    allocationRoleMenu(_id: string,menuid:Array<string>): Promise<IServerReturn<any>> {
+        return this.dataRequest.postRequest(`${RoleApi.allocationRoleMenu}/${_id}`,menuid)
+    }
+    getallocationRoleMenu(_id:string): Promise<IServerReturn<Array<string>>> {
+        return this.dataRequest.getRequest(`${RoleApi.getallocationRoleMenu}/${_id}`)
+      }
 }
