@@ -13,7 +13,9 @@ on:
     branches: [develop]
   pull_request:
     branches: [develop]
-
+env:
+   IMAGE_NAME: registry.cn-hangzhou.aliyuncs.com/suktcore/dashboard_adminui #
+   IMAGE_TAG: develop
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -24,9 +26,30 @@ jobs:
 
       - name: 安装npm包  #进入项目目录----发布项目
         run: yarn install --cwd sukt.core.react && cd sukt.core.react && yarn build
-      - name: 打印打包文件夹
-        run: ls /sukt.core.react
+      
+      - name: 打印sukt.core.react文件夹列表
+        run: |
+          cd sukt.core.react
+          ls
       - name: copy nginx.conf and Dockerfile to build
-        run: ls /sukt.core.react
-      - name: 打印build文件夹目录
-        run: ls /sukt.core.react
+        run: cp sukt.core.react/nginx.conf sukt.core.react/Dockerfile sukt.core.react/build/
+      
+      - name: 打印sukt.core.react/build文件夹列表
+        run: |
+          cd sukt.core.react/build
+          ls
+      - name: Login To Docker #登录到镜像仓库
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.ALIYUN_DOCKER_IMAGESTORE_USERNAME }}
+          password: ${{ secrets.ALIYUN_DOCKER_IMAGESTORE_PASSWORD }}
+          registry: registry.cn-hangzhou.aliyuncs.com/suktcore/sukt-core-admin-api #镜像仓库地址
+      - name: Build Docker Image # Build Docker镜像并推送到镜像仓库
+        uses: docker/build-push-action@v2
+        with:
+          tags: ${{env.IMAGE_NAME}}:${{env.IMAGE_TAG}}.${{ github.run_id }}.${{ github.run_number }} #动态变量镜像TAG 使用github运行job和jobid设置tag
+          context: /home/runner/work/Sukt.Core/Sukt.Core
+          file: /home/runner/work/Sukt.Core.AdminUI/Sukt.Core.AdminUI/Dockerfilepublish # 指定Dockerfile
+          push: true
+      - name: Docker Images List # 列出所有镜像
+        run: docker images
