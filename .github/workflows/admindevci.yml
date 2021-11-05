@@ -24,3 +24,9 @@ jobs:
 
       - name: 安装npm包  #进入项目目录----发布项目
         run: yarn install --cwd sukt.core.react && cd sukt.core.react && yarn build
+      - name: 打印打包文件夹
+        run: ls /sukt.core.react
+      - name: copy nginx.conf and Dockerfile to build
+        run: ls /sukt.core.react
+      - name: 打印build文件夹目录
+        run: ls /sukt.core.react
