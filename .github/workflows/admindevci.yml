@@ -33,8 +33,8 @@ jobs:
           ls
       - name: copy nginx.conf and Dockerfile to build
         run: |
-          cd sukt.core.react/build
-          ls 
+          # cd sukt.core.react/build
+          # ls 
           cp sukt.core.react/nginx.conf sukt.core.react/Dockerfile sukt.core.react/build
       - name: 打印sukt.core.react/build文件夹列表
         run: |
