@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  labels:
+    app: sukt-core-admin-ui
+  name: sukt-core-admin-ui
+  namespace: sukt-core
+spec:
+  selector:
+    matchLabels:
+      app: sukt-core-admin-ui
+  template:
+    metadata:
+      labels:
+        app: sukt-core-admin-ui
+    spec:
+      tolerations:
+      - key: node-role.kubernetes.io/master
+        effect: NoSchedule
+      containers:
+        - name: sukt-core-admin-ui
+          image: registry.cn-hangzhou.aliyuncs.com/suktcore/dashboard_adminui:develop.1432922438.24
+          imagePullPolicy: IfNotPresent
+          resources:
+            limits:
+              memory: "200Mi"
+              cpu: "500m"
+          ports:
+          - containerPort: 80
+            protocol: TCP
+      restartPolicy: Always
+      imagePullSecrets:
+        - name: aliyun-iamge-secret
+      terminationGracePeriodSeconds: 30
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: sukt-core-admin-ui
+  name: sukt-core-admin-ui
+  namespace: sukt-core
+spec:
+  selector:
+    app: sukt-core-admin-ui
+  ports:
+  - port: 80
+    targetPort: 80
+  type: ClusterIP
