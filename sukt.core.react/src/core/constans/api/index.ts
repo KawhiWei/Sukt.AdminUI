@@ -28,3 +28,10 @@ export const RoleApi = {
   getallocationRoleMenu:"/RoleMenu/GetAllocationRoleMenuIdAsync",
 }
 
+export const FunctionApi = {
+  create: "/Function/createAsync",
+  update: "/Function/updateAsync",
+  delete: "/Function/DeleteAsync",
+  getpage: "/Function/GetPageAsync",
+  getloadRowById: "/Function/LoadFormAsync",
+}

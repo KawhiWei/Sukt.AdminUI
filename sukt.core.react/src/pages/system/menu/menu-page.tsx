@@ -61,21 +61,21 @@ const MenuPage = () => {
     };
     const pagination: PaginationProps = {
         ...tacitPagingProps,
-        total:paginationConfig.total,
-        current:paginationConfig.current,
-        pageSize:paginationConfig.pageSize,
+        total: paginationConfig.total,
+        current: paginationConfig.current,
+        pageSize: paginationConfig.pageSize,
         onShowSizeChange: (current: number, pageSize: number) => {
-          
+
         },
         onChange: (page: number, pageSize?: number) => {
-          
+
         }
-      };
+    };
     /**
      * 渲染子组件
      */
     const renderOperation = useMemo(() => {
-        return (<MenuOperation  operationRef={menuOperationRef} onCallbackEvent={getTable}></MenuOperation>)
+        return (<MenuOperation operationRef={menuOperationRef} onCallbackEvent={getTable}></MenuOperation>)
     }, [])
     const [tableData, setTableData] = useState<Array<IBusinessMenuDto>>([{
         id: "121214545",
@@ -157,7 +157,7 @@ const MenuPage = () => {
      * 修改任务
      * @param _id 
      */
-     const editRow = (_id: any) => {
+    const editRow = (_id: any) => {
         menuOperationRef.current && menuOperationRef.current.changeVal(OperationTypeEnum.edit, _id);
     }
     const addChange = () => {
