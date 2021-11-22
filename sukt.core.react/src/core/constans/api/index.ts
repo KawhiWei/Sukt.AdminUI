@@ -35,3 +35,10 @@ export const FunctionApi = {
   getpage: "/Function/GetPageAsync",
   getloadRowById: "/Function/LoadFormAsync",
 }
+export const MultiTenantApi = {
+  create: "/MultiTenant/createAsync",
+  update: "/MultiTenant/updateAsync",
+  delete: "/MultiTenant/DeleteAsync",
+  getpage: "/MultiTenant/GetPageAsync",
+  getloadRowById: "/MultiTenant/LoadFormAsync",
+}

@@ -18,18 +18,7 @@ export interface IBusinessRoleBase {
  * 
  */
 export interface IBusinessRoleDto extends IBusinessRoleBase,IEntity<string>  {
-    /**
-     * 菜单名
-     */
-    name: string;
-    /**
-     * 标准化角色名称
-     */
-    normalizedName: string;
-    /**
-     * 是否是超级管理员
-     */
-    isAdmin: boolean;
+
 }
 
 /**
@@ -49,3 +38,4 @@ export class RoleInputDto implements IBusinessRoleBase {
      */
     isAdmin: boolean = false;
 }
+

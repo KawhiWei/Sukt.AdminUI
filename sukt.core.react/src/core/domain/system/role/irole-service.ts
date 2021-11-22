@@ -15,7 +15,7 @@ export interface IRoleService {
   /**
    * 获取表格数据
    */
-   getpage(_request?:any): Promise<IServerPageReturn<any>>;
+  getpage(_request?:any): Promise<IServerPageReturn<any>>;
   /**
    * 删除一行数据
    * @param _id 

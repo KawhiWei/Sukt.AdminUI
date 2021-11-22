@@ -3,5 +3,5 @@ export const IocTypes = {
   UserService: Symbol("UserService"),
   RoleService: Symbol("RoleService"),
   FunctionService: Symbol("FunctionService"),
-  
+  MultitenantService: Symbol("MultitenantService"), 
 };
