@@ -39,3 +39,30 @@ export class MultiTenantInputDto implements IBusinessMultiTenantBase {
     email: string = "";
 
 }
+/**
+ * 租户连接字符串基类
+ */
+export interface IBusinessMultiTenantConntionstringBase {
+    /**
+     * 服务名称
+     */
+    name: string;
+    /**
+     * 连接字符串
+     */
+    value: string;
+}
+/**
+ * 租户连接字符串Dto
+ */
+ export interface IBusinessMultiTenantConntionstringDto extends IBusinessMultiTenantConntionstringBase, IEntity<string>{
+}
+
+/**
+ * 租户连接字符串输入Dto
+ */
+ export class MultiTenantConntionstringInputDto implements IBusinessMultiTenantConntionstringBase {
+    name: string = "";
+    value: string = "";
+
+}

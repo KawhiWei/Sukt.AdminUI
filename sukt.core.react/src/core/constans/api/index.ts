@@ -41,4 +41,9 @@ export const MultiTenantApi = {
   delete: "/MultiTenant/DeleteAsync",
   getpage: "/MultiTenant/GetPageAsync",
   getloadRowById: "/MultiTenant/LoadFormAsync",
+  getConntionStringloadRowById: "/MultiTenantConntionString/LoadFormAsync",
+  createConntionString: "/MultiTenantConntionString/createAsync",
+  updateConntionString: "/MultiTenantConntionString/updateAsync",
+  deleteConntionString: "/MultiTenantConntionString/DeleteAsync",
+  getpageConntionString: "/MultiTenantConntionString/GetPageAsync",
 }

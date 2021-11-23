@@ -124,10 +124,9 @@ const UserAllocationRole = (props: IProp) => {
         pageSize: paginationConfig.pageSize,
         onShowSizeChange: (current: number, pageSize: number) => {
             setPaginationConfig((Pagination) => {
-                Pagination.current =current;
-                if(pageSize)
-                {
-                    Pagination.pageSize =pageSize;
+                Pagination.current = current;
+                if (pageSize) {
+                    Pagination.pageSize = pageSize;
                 }
                 return Pagination;
             });
@@ -135,17 +134,16 @@ const UserAllocationRole = (props: IProp) => {
         },
         onChange: (page: number, pageSize?: number) => {
             setPaginationConfig((Pagination) => {
-                Pagination.current =page;
-                if(pageSize)
-                {
-                    Pagination.pageSize =pageSize;
+                Pagination.current = page;
+                if (pageSize) {
+                    Pagination.pageSize = pageSize;
                 }
                 return Pagination;
             });
             getTable(page, pageSize);
         }
     };
-    
+
     /**
      * 父组件调用子组件事件处理
      */

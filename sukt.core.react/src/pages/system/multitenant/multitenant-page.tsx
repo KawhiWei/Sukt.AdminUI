@@ -5,6 +5,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { IMultiTenantDto } from "@/core/domain/system/multitenant/multitenant-entity";
 import { IMultitenantService } from "@/core/domain/system/multitenant/imultitenant-service";
 import { IocTypes } from "@/shared/config/ioc-types";
+import MultitenantConntionstringOperation from "./multitenant-conntionstring-operation";
+import MultitenantConntionstringPage from "./multitenant-conntionstring-page";
 import MultitenantOperation from "./multitenant-operation";
 import { OperationTypeEnum } from "@/shared/operation/operationType";
 import useHookProvider from "@/shared/customHooks/ioc-hook-provider";
@@ -75,6 +77,8 @@ const MultitenantPage = () => {
             render: (text: any, record: IMultiTenantDto) => {
                 return <div>
                     <Button type="primary" onClick={() => editRow(record.id)}>编辑</Button>
+                    <Button type="primary" onClick={() => addConntionstring(record.id)}>添加数据库链接</Button>
+                    <Button type="primary" onClick={() => selectConntionstringPage(record.id)}>查看链接列表</Button>
                     <Button type="primary" danger onClick={() => deleteRow(record.id)}>删除</Button>
                 </div>
             }
@@ -110,12 +114,20 @@ const MultitenantPage = () => {
         });
 
     };
+    
     /**
      * 修改
      * @param _id 
      */
     const editRow = (_id: any) => {
         OperationRef.current && OperationRef.current.changeVal(OperationTypeEnum.edit, _id);
+    }
+    /**
+     * 查看链接列表
+     * @param _id 
+     */
+     const selectConntionstringPage = (_id: any) => {
+        MultitenantConntionstringPageRef.current && MultitenantConntionstringPageRef.current.changeVal(OperationTypeEnum.view, _id);
     }
     /**
      * 删除
@@ -130,16 +142,45 @@ const MultitenantPage = () => {
         });
 
     };
+    /**
+     * 添加服务链接字符串
+     * @param _id 
+     */
+    const addConntionstring = (_id: string) => {
+        MultitenantConntionstringOperationRef.current && MultitenantConntionstringOperationRef.current.changeVal(OperationTypeEnum.add, _id);
+
+    };
+
 
     /**
      * 父组件获取子组件所有内容
      */
     const OperationRef = useRef<any>();
     /**
+     * 父组件获取子组件所有内容
+     */
+    const MultitenantConntionstringOperationRef = useRef<any>();
+    /**
+     * 父组件获取子组件所有内容
+     */
+     const MultitenantConntionstringPageRef = useRef<any>();
+    /**
      * 渲染子组件
      */
     const renderOperation = useMemo(() => {
         return (<MultitenantOperation operationRef={OperationRef} onCallbackEvent={getTable}></MultitenantOperation>)
+    }, [])
+    /**
+     * 渲染子组件
+     */
+    const renderConntionstringOperation = useMemo(() => {
+        return (<MultitenantConntionstringOperation operationRef={MultitenantConntionstringOperationRef} onCallbackEvent={getTable}></MultitenantConntionstringOperation>)
+    }, [])
+    /**
+     * 渲染子组件
+     */
+     const MultitenantConntionstringPageDrawer = useMemo(() => {
+        return (<MultitenantConntionstringPage  operationRef={MultitenantConntionstringPageRef} onCallbackEvent={getTable}></MultitenantConntionstringPage>)
     }, [])
     const addChange = () => {
         OperationRef.current && OperationRef.current.changeVal(OperationTypeEnum.add);
@@ -152,6 +193,8 @@ const MultitenantPage = () => {
             </Row>
             <Table bordered columns={columns} dataSource={tableData} loading={loading} pagination={pagination} />
             {renderOperation}
+            {renderConntionstringOperation}
+            {MultitenantConntionstringPageDrawer}
         </div>)
 }
 export default MultitenantPage;
