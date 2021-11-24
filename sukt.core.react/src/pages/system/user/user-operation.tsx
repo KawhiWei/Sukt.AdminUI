@@ -1,7 +1,7 @@
 import * as MenuEnum from "../../../core/constans/enum/menu";
 
 import { Button, Col, DatePicker, Form, Input, InputNumber, Modal, Row, Select, Switch, message } from "antd";
-import { useImperativeHandle, useState } from "react";
+import { useEffect, useImperativeHandle, useState } from "react";
 
 import { IOperationConfig } from "../../../shared/operation/operationConfig";
 import { IUserService } from "@/core/domain/system/user/iuser-service";
@@ -14,13 +14,17 @@ import useHookProvider from "@/shared/customHooks/ioc-hook-provider";
 
 interface IProp {
     /**
-     * 
-     */
-    operationRef?: any;
-    /**
      * 操作成功回调事件
      */
     onCallbackEvent?: any;
+    /**
+     * Id
+     */
+    id?: string;
+    /**
+     * 操作类型
+     */
+    operationType: OperationTypeEnum
 }
 /**
  * form表单布局设置
@@ -49,32 +53,6 @@ const UserOperation = (props: IProp) => {
     const [initformData, setinitformData] = useState<UserInputDto>(new UserInputDto());
     const [birthday, setBirthday] = useState<string>("");
     const [formData] = Form.useForm();
-    const [currentId, setcurrentId] = useState<string>("");
-    /**
-     * 操作类型
-     */
-    const [operationType, setOperationType] = useState<OperationTypeEnum>(OperationTypeEnum.view);
-    /**
-     * 父组件调用子组件事件处理
-     */
-    useImperativeHandle(props.operationRef, () => ({
-        changeVal: (_operationType: OperationTypeEnum, _id?: string) => {
-            setOperationType(_operationType);
-            switch (_operationType) {
-                case OperationTypeEnum.add:
-                    editOperationState(true, "添加")
-                    formData.setFieldsValue(initformData);
-                    break;
-                case OperationTypeEnum.edit:
-                    _id && setcurrentId(_id);
-                    _id && onGetLoad(_id);
-                    break;
-                case OperationTypeEnum.view:
-                    editOperationState(true, "查看")
-                    break;
-            }
-        }
-    }));
     /**
      * 修改弹框属性
      * @param _visible 
@@ -86,8 +64,7 @@ const UserOperation = (props: IProp) => {
     /**
      * 因为antd 太辣鸡，导致没有办法直接在form表单使用string给表单加载日期，需要单独定义一个字段来转换从而产生了此方法
      */
-    const editBirthday=(date:any, dateString:any)=>{
-        console.log(date,dateString)
+    const editBirthday = (date: any, dateString: any) => {
         setBirthday(dateString)
     }
     /**
@@ -95,13 +72,22 @@ const UserOperation = (props: IProp) => {
      */
     const onCancel = () => {
         editOperationState(false)
+        props.onCallbackEvent && props.onCallbackEvent()
     };
     /**
      * 编辑获取一个表单
-     * @param _id 
      */
-    const onGetLoad = (_id: string) => {
-        _userservice.getloadRow(_id).then(res => {
+    const onGetLoad = () => {
+        switch (props.operationType) {
+            case OperationTypeEnum.add:
+                editOperationState(true, "添加")
+                formData.setFieldsValue(initformData);
+                break;
+            case OperationTypeEnum.view:
+                editOperationState(true, "查看")
+                break;
+        }
+        props.id && _userservice.getloadRow(props.id).then(res => {
             if (res.success) {
                 console.log(res);
                 setBirthday(res.data.birthday)
@@ -110,6 +96,12 @@ const UserOperation = (props: IProp) => {
             }
         })
     }
+    /**
+     * 页面初始化事件
+     */
+    useEffect(() => {
+        onGetLoad()
+    }, [formData]);
     /**
      * Modal保存事件
      * @param formfieldsValue 
@@ -127,12 +119,12 @@ const UserOperation = (props: IProp) => {
         param.education = formfieldsValue.education;
         param.userType = formfieldsValue.userType;
         param.sex = formfieldsValue.sex;
-        if (operationType === OperationTypeEnum.add) {
+        if (props.operationType === OperationTypeEnum.add) {
             param.passwordHash = formfieldsValue.passwordHash;
         }
         // console.log(formfieldsValue['birthday'].format('YYYY-MM-DD HH:mm:ss'));
         // console.log(formfieldsValue['birthday'].format('YYYY-MM-DD'));
-        switch (operationType) {
+        switch (props.operationType) {
             case OperationTypeEnum.add:
                 onCreate(param);
                 break;
@@ -161,7 +153,7 @@ const UserOperation = (props: IProp) => {
      * @param _data 
      */
     const onEdit = (_data: UserInputDto) => {
-        _userservice.update(currentId, _data).then(res => {
+        props.id && _userservice.update(props.id, _data).then(res => {
             if (res.success) {
                 setOperationState({ visible: false })
                 message.success(res.message, 3)
@@ -187,7 +179,7 @@ const UserOperation = (props: IProp) => {
                             </Form.Item>
                         </Col>
                         <Col span="12">
-                            {operationType === OperationTypeEnum.add &&
+                            {props.operationType === OperationTypeEnum.add &&
                                 (
                                     <Form.Item
                                         name="passwordHash"
@@ -257,7 +249,7 @@ const UserOperation = (props: IProp) => {
                         <Col span="12">
                             <Form.Item
                                 label="生日">
-                                <DatePicker  onChange={editBirthday} value={moment(birthday, 'YYYY-MM-DD')}/>
+                                <DatePicker onChange={editBirthday} value={moment(birthday, 'YYYY-MM-DD')} />
                             </Form.Item>
                         </Col>
                         <Col span="12">

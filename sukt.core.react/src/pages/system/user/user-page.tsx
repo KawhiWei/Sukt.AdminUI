@@ -18,34 +18,26 @@ const UserPage = () => {
     const _userservice: IUserService = useHookProvider(IocTypes.UserService);
     const [loading, setloading] = useState<boolean>(false);
     const [paginationConfig, setPaginationConfig] = useState<initPaginationConfig>(new initPaginationConfig());
+    const [subOperationElement, setOperationElement] = useState<any>(null);
+    const [subAllocationRoleElement, setAllocationRoleElement] = useState<any>(null);
     const pagination: PaginationProps = {
         ...tacitPagingProps,
-        total:paginationConfig.total,
-        current:paginationConfig.current,
-        pageSize:paginationConfig.pageSize,
+        total: paginationConfig.total,
+        current: paginationConfig.current,
+        pageSize: paginationConfig.pageSize,
         onShowSizeChange: (current: number, pageSize: number) => {
-          
+
         },
         onChange: (page: number, pageSize?: number) => {
             setPaginationConfig((Pagination) => {
                 Pagination.current = page;
-                if(pageSize)
-                {
-                    Pagination.pageSize = pageSize ;
+                if (pageSize) {
+                    Pagination.pageSize = pageSize;
                 }
                 return Pagination;
             });
         }
-      };
-    /**
-     * 父组件获取子组件所有内容
-     */
-    const userOperationRef = useRef<any>();
-    /**
-     * 父组件获取子组件所有内容
-     */
-    const userAllocationRoleRef = useRef<any>();
-
+    };
     /**
      * 页面初始化事件
      */
@@ -56,6 +48,7 @@ const UserPage = () => {
      * 页面初始化获取数据
      */
     const getTable = () => {
+        setOperationElement(null);
         _userservice.getpage().then((x) => {
             if (x.success) {
                 setPaginationConfig((Pagination) => {
@@ -79,10 +72,12 @@ const UserPage = () => {
                 getTable();
             }
         });
-
     };
     const userAllocationRole = (_id: string) => {
-        userAllocationRoleRef.current && userAllocationRoleRef.current.changeVal(_id);
+        setAllocationRoleElement(<UserAllocationRole onCallbackEvent={clearsubAllocationRoleElement} id={_id} />)
+    }
+    const clearsubAllocationRoleElement = () => {
+        setAllocationRoleElement(null);
     }
     const columns = [
         {
@@ -158,28 +153,16 @@ const UserPage = () => {
             }
         }
     ];
-    /**
-     * 渲染子组件
-     */
-    const renderOperation = useMemo(() => {
-        return (<UserOperation operationRef={userOperationRef} onCallbackEvent={getTable}></UserOperation>)
-    }, [])
-    /**
-     * 渲染子组件
-     */
-    const renderAllocationRole = useMemo(() => {
-        return (<UserAllocationRole operationRef={userAllocationRoleRef}></UserAllocationRole>)
-    }, [])
     const [tableData, setTableData] = useState<Array<IBusinessUserDto>>([]);
     /**
      * 修改任务
      * @param _id 
      */
     const editRow = (_id: any) => {
-        userOperationRef.current && userOperationRef.current.changeVal(OperationTypeEnum.edit, _id);
+        setOperationElement(<UserOperation onCallbackEvent={getTable} operationType={OperationTypeEnum.edit} id={_id} />)
     }
     const addChange = () => {
-        userOperationRef.current && userOperationRef.current.changeVal(OperationTypeEnum.add);
+        setOperationElement(<UserOperation onCallbackEvent={getTable} operationType={OperationTypeEnum.add} />)
     }
     return (<div>
         <Row>
@@ -189,8 +172,8 @@ const UserPage = () => {
         <Row>
             <Col span={24}><Table bordered columns={columns} dataSource={tableData} loading={loading} pagination={pagination} /></Col>
         </Row>
-        {renderAllocationRole}
-        {renderOperation}
+        {subAllocationRoleElement}
+        {subOperationElement}
     </div>)
 };
 export default UserPage;

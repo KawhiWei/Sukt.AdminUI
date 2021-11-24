@@ -30,10 +30,10 @@ export default class MultitenantService extends BaseService implements IMultiten
     deleteConntionstring(_tenantid: string, _id: string): Promise<IServerReturn<any>> {
         return this.dataRequest.deleteRequest(`${MultiTenantApi.deleteConntionString}/${_tenantid}/${_id}`)
     }
-    updateConntionstring(_tenantid: string, _id: string, _param: MultiTenantInputDto): Promise<IServerReturn<any>> {
+    updateConntionstring(_tenantid: string, _id: string, _param: MultiTenantConntionstringInputDto): Promise<IServerReturn<any>> {
         return this.dataRequest.putRequest(`${MultiTenantApi.updateConntionString}/${_tenantid}/${_id}`, _param)
     }
-    getloadRowConntionstring(_tenantid: string, _id: string, _param: MultiTenantInputDto): Promise<IServerReturn<any>> {
+    getloadRowConntionstring(_tenantid: string, _id: string): Promise<IServerReturn<any>> {
         return this.dataRequest.getRequest(`${MultiTenantApi.getConntionStringloadRowById}/${_tenantid}/${_id}`)
     }
     getpageConntionstring(_tenantid: string, _param: any): Promise<IServerPageReturn<any>> {

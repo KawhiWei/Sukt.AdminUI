@@ -18,6 +18,10 @@ interface IProp {
      * 操作成功回调事件
      */
     onCallbackEvent?: any;
+    /**
+     * Id
+     */
+    id: string;
 }
 /**
  * 
@@ -27,7 +31,7 @@ const UserAllocationRole = (props: IProp) => {
     const _userservice: IUserService = useHookProvider(IocTypes.UserService);
     const [operationState, setOperationState] = useState<IOperationConfig>({ visible: false })
     const [tableData, setTableData] = useState<Array<IBusinessRoleDto>>([]);
-    const [currentId, setcurrentId] = useState<string>("");
+    const [isRefrensh, setRefrensh] = useState<boolean>(true);
     const [paginationConfig, setPaginationConfig] = useState<initPaginationConfig>(new initPaginationConfig());
     /**
      * 表格选中值
@@ -43,7 +47,6 @@ const UserAllocationRole = (props: IProp) => {
     }
     const onSelectChange = (selectedRows: any) => {
         setRoleSelectedRowKeys(selectedRows);
-
     }
     const rowSelection = {
         selectedRowKeys: roleSelectedRowKeys,
@@ -77,7 +80,8 @@ const UserAllocationRole = (props: IProp) => {
      * 页面初始化事件
      */
     useEffect(() => {
-    }, [paginationConfig, tableData, roleSelectedRowKeys]);
+        getLoadUserRole()
+    }, [isRefrensh]);
     /**
      * 页面初始化获取数据
      */
@@ -100,17 +104,17 @@ const UserAllocationRole = (props: IProp) => {
                 if (!operationState.visible) {
                     editOperationState(true);
                 }
-
+                setRefrensh(false);
             }
         });
 
     };
-    const getLoadUserRole = (_id: string) => {
+    const getLoadUserRole = () => {
         setPaginationConfig((PaginationConfig) => {
             PaginationConfig = new initPaginationConfig()
             return PaginationConfig;
         });
-        _userservice.getLoadUserRole(_id).then(res => {
+        _userservice.getLoadUserRole(props.id).then(res => {
             if (res.success) {
                 setRoleSelectedRowKeys(res.data);
                 getTable(paginationConfig.current, paginationConfig.pageSize)
@@ -144,23 +148,15 @@ const UserAllocationRole = (props: IProp) => {
         }
     };
 
-    /**
-     * 父组件调用子组件事件处理
-     */
-    useImperativeHandle(props.operationRef, () => ({
-        changeVal: (_id: string) => {
-            _id && setcurrentId(_id);
-            getLoadUserRole(_id);
-
-        }
-    }));
     const onSave = () => {
-        _userservice.userAllocationRole(currentId, roleSelectedRowKeys).then(res => {
+        _userservice.userAllocationRole(props.id, roleSelectedRowKeys).then(res => {
             if (res.success) {
                 editOperationState(false);
                 setRoleSelectedRowKeys([]);
+                props.onCallbackEvent && props.onCallbackEvent();
                 message.success(res.message, 3)
-                // setloading(false);
+            } else {
+                message.error(res.message, 3)
             }
         });
     }
@@ -170,6 +166,7 @@ const UserAllocationRole = (props: IProp) => {
      */
     const onCancel = () => {
         editOperationState(false)
+        props.onCallbackEvent && props.onCallbackEvent();
     };
     return (
         <div>

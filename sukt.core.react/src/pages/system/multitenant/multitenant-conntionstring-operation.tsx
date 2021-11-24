@@ -1,5 +1,5 @@
 import { Button, Col, Form, Input, Modal, Row, Select, Switch, message } from "antd";
-import { useImperativeHandle, useState } from "react";
+import { useEffect, useImperativeHandle, useState } from "react";
 
 import { IMultitenantService } from "@/core/domain/system/multitenant/imultitenant-service";
 import { IOperationConfig } from "../../../shared/operation/operationConfig";
@@ -10,13 +10,21 @@ import useHookProvider from "../../..//shared/customHooks/ioc-hook-provider";
 
 interface IProp {
     /**
-     * 
-     */
-    operationRef?: any;
-    /**
      * 操作成功回调事件
      */
     onCallbackEvent?: any;
+    /**
+     * 租户Id
+     */
+    tenantId: string;
+    /**
+     * 编辑Id
+     */
+    id?: string
+    /**
+     * 操作类型
+     */
+    operationType: OperationTypeEnum
 }
 /**
  * form表单布局设置
@@ -48,26 +56,6 @@ const MultitenantConntionstringOperation = (props: IProp) => {
     const [operationState, setOperationState] = useState<IOperationConfig>({ visible: false })
     const [initformData, setinitformData] = useState<MultiTenantConntionstringInputDto>(new MultiTenantConntionstringInputDto());
     const [formData] = Form.useForm();
-    const [currentId, setcurrentId] = useState<string>("");
-    /**
-     * 操作类型
-     */
-    const [operationType, setOperationType] = useState<OperationTypeEnum>(OperationTypeEnum.view);
-    /**
-     * 父组件调用子组件事件处理
-     */
-    useImperativeHandle(props.operationRef, () => ({
-        changeVal: (_operationType: OperationTypeEnum, _id?: string) => {
-            setOperationType(_operationType);
-            switch (_operationType) {
-                case OperationTypeEnum.add:
-                    editOperationState(true, "添加")
-                    _id && setcurrentId(_id);
-                    formData.setFieldsValue(initformData);
-                    break;
-            }
-        }
-    }));
     /**
      * 修改弹框属性
      * @param _visible 
@@ -77,10 +65,38 @@ const MultitenantConntionstringOperation = (props: IProp) => {
         setOperationState({ visible: _visible, title: _title });
     }
     /**
+     * 编辑获取一个表单
+     * @param _id 
+     */
+    const onGetLoad = () => {
+        switch (props.operationType) {
+            case OperationTypeEnum.add:
+                editOperationState(true, "添加")
+                formData.setFieldsValue(initformData);
+                break;
+            case OperationTypeEnum.view:
+                editOperationState(true, "查看")
+                break;
+        }
+        props.id && _multitenantservice.getloadRowConntionstring(props.tenantId, props.id).then(res => {
+            if (res.success) {
+                formData.setFieldsValue(res.data);
+                editOperationState(true, "修改")
+            }
+        })
+    }
+    /**
+     * 页面初始化事件
+     */
+    useEffect(() => {
+        onGetLoad()
+    }, [formData]);
+    /**
      * 弹框取消事件
      */
     const onCancel = () => {
         editOperationState(false)
+        props.onCallbackEvent && props.onCallbackEvent();
     };
     /**
      * Modal保存事件
@@ -88,11 +104,14 @@ const MultitenantConntionstringOperation = (props: IProp) => {
      */
     const onFinish = (formfieldsValue: any) => {
         let param = new MultiTenantConntionstringInputDto();
-        param.name=formfieldsValue.name;
-        param.value=formfieldsValue.value;
-        switch (operationType) {
+        param.name = formfieldsValue.name;
+        param.value = formfieldsValue.value;
+        switch (props.operationType) {
             case OperationTypeEnum.add:
                 onCreate(param);
+                break;
+            case OperationTypeEnum.edit:
+                onUpdate(param);
                 break;
         }
     };
@@ -101,19 +120,37 @@ const MultitenantConntionstringOperation = (props: IProp) => {
      * @param _data 
      */
     const onCreate = (_data: MultiTenantConntionstringInputDto) => {
-        debugger
-        _multitenantservice.createConntionstring(currentId,_data).then(res => {
+        _multitenantservice.createConntionstring(props.tenantId, _data).then(res => {
             if (res.success) {
                 setOperationState({ visible: false })
                 message.success(res.message, 3)
                 props.onCallbackEvent && props.onCallbackEvent();
             }
+            else {
+                message.error(res.message, 3)
+            }
+        })
+    }
+    /**
+     * 添加菜单
+     * @param _data 
+     */
+    const onUpdate = (_data: MultiTenantConntionstringInputDto) => {
+        props.id && _multitenantservice.updateConntionstring(props.tenantId, props.id, _data).then(res => {
+            if (res.success) {
+                setOperationState({ visible: false })
+                message.success(res.message, 3)
+                props.onCallbackEvent && props.onCallbackEvent();
+            }
+            else {
+                message.error(res.message, 3)
+            }
         })
     }
     return (
         <div>
-            <Modal width={1000} getContainer={false} maskClosable={false} title={operationState.title} 
-            closable={false} visible={operationState.visible} footer={null}>
+            <Modal width={1000} getContainer={false} maskClosable={false} title={operationState.title}
+                closable={false} visible={operationState.visible} footer={null}>
                 <Form form={formData}
                     {...formItemLayout}
                     name="nest-messages"
