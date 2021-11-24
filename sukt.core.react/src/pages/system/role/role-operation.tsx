@@ -1,7 +1,7 @@
 import * as MenuEnum from "../../../core/constans/enum/menu";
 
 import { Button, Col, DatePicker, Form, Input, InputNumber, Modal, Row, Select, Switch, message } from "antd";
-import { useImperativeHandle, useState } from "react";
+import { useEffect, useImperativeHandle, useState } from "react";
 
 import { IOperationConfig } from "../../../shared/operation/operationConfig";
 import { IRoleService } from "../../..//core/domain/system/role/irole-service";
@@ -13,13 +13,17 @@ import useHookProvider from "../../..//shared/customHooks/ioc-hook-provider";
 
 interface IProp {
     /**
-     * 
-     */
-    operationRef?: any;
-    /**
      * 操作成功回调事件
      */
     onCallbackEvent?: any;
+    /**
+     * Id
+     */
+    id?: string;
+    /**
+     * 操作类型
+     */
+    operationType: OperationTypeEnum
 }
 /**
  * form表单布局设置
@@ -46,32 +50,6 @@ const RoleOperation = (props: IProp) => {
     const [operationState, setOperationState] = useState<IOperationConfig>({ visible: false })
     const [initformData, setinitformData] = useState<RoleInputDto>(new RoleInputDto());
     const [formData] = Form.useForm();
-    const [currentId, setcurrentId] = useState<string>("");
-    /**
-     * 操作类型
-     */
-    const [operationType, setOperationType] = useState<OperationTypeEnum>(OperationTypeEnum.view);
-    /**
-     * 父组件调用子组件事件处理
-     */
-    useImperativeHandle(props.operationRef, () => ({
-        changeVal: (_operationType: OperationTypeEnum, _id?: string) => {
-            setOperationType(_operationType);
-            switch (_operationType) {
-                case OperationTypeEnum.add:
-                    editOperationState(true, "添加")
-                    formData.setFieldsValue(initformData);
-                    break;
-                case OperationTypeEnum.edit:
-                    _id && setcurrentId(_id);
-                    _id && onGetLoad(_id);
-                    break;
-                case OperationTypeEnum.view:
-                    editOperationState(true, "查看")
-                    break;
-            }
-        }
-    }));
     /**
      * 修改弹框属性
      * @param _visible 
@@ -88,10 +66,18 @@ const RoleOperation = (props: IProp) => {
     };
     /**
      * 编辑获取一个表单
-     * @param _id 
      */
-    const onGetLoad = (_id: string) => {
-        _roleservice.getloadRow(_id).then(res => {
+    const onGetLoad = () => {
+        switch (props.operationType) {
+            case OperationTypeEnum.add:
+                editOperationState(true, "添加")
+                formData.setFieldsValue(initformData);
+                break;
+            case OperationTypeEnum.view:
+                editOperationState(true, "查看")
+                break;
+        }
+        props.id && _roleservice.getloadRow(props.id).then(res => {
             if (res.success) {
                 formData.setFieldsValue(res.data);
                 editOperationState(true, "查看")
@@ -99,15 +85,21 @@ const RoleOperation = (props: IProp) => {
         })
     }
     /**
+     * 页面初始化事件
+     */
+    useEffect(() => {
+        onGetLoad()
+    }, [formData]);
+    /**
      * Modal保存事件
      * @param formfieldsValue 
      */
     const onFinish = (formfieldsValue: any) => {
         let param = new RoleInputDto();
-        param.name=formfieldsValue.name;
-        param.normalizedName=formfieldsValue.normalizedName;
-        param.isAdmin=formfieldsValue.isAdmin;
-        switch (operationType) {
+        param.name = formfieldsValue.name;
+        param.normalizedName = formfieldsValue.normalizedName;
+        param.isAdmin = formfieldsValue.isAdmin;
+        switch (props.operationType) {
             case OperationTypeEnum.add:
                 onCreate(param);
                 break;
@@ -136,7 +128,7 @@ const RoleOperation = (props: IProp) => {
      * @param _data 
      */
     const onEdit = (_data: RoleInputDto) => {
-        _roleservice.update(currentId, _data).then(res => {
+        props.id && _roleservice.update(props.id, _data).then(res => {
             if (res.success) {
                 setOperationState({ visible: false })
                 message.success(res.message, 3)
@@ -146,8 +138,8 @@ const RoleOperation = (props: IProp) => {
     }
     return (
         <div>
-            <Modal width={1000} getContainer={false} maskClosable={false} title={operationState.title} 
-            closable={false} visible={operationState.visible} footer={null}>
+            <Modal width={1000} getContainer={false} maskClosable={false} title={operationState.title}
+                closable={false} visible={operationState.visible} footer={null}>
                 <Form form={formData}
                     {...formItemLayout}
                     name="nest-messages"

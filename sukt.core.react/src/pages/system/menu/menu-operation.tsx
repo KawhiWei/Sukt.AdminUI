@@ -69,7 +69,6 @@ const MenuOperation = (props: IProp) => {
     const onGetLoad = () => {
         switch (props.operationType) {
             case OperationTypeEnum.add:
-                console.log(_menuservice);
                 editOperationState(true, "添加")
                 formData.setFieldsValue(initformData);
                 break;
@@ -125,7 +124,7 @@ const MenuOperation = (props: IProp) => {
      * @param _data 
      */
     const onEdit = (_data: MenuInputDto) => {
-        props.id&&  _menuservice.update(props.id, _data).then(res => {
+        props.id && _menuservice.update(props.id, _data).then(res => {
             if (res.success) {
                 setOperationState({ visible: false })
                 message.success(res.message, 3)

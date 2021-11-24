@@ -18,6 +18,10 @@ interface IProp {
    * 操作成功回调事件
    */
   onCallbackEvent?: any;
+  /**
+   * Id
+   */
+  id: string;
 }
 /**
  * 
@@ -27,7 +31,7 @@ const RoleAllocationMenu = (props: IProp) => {
   const _menuservice: IMenuService = useHookProvider(IocTypes.MenuService);
   const [operationState, setOperationState] = useState<IOperationConfig>({ visible: false })
   const [treeData, setTreeData] = useState<Array<AntDesignTreeEntity>>([]);
-  const [currentId, setcurrentId] = useState<string>("");
+  const [isRefrensh, setRefrensh] = useState<boolean>(true);
   /**
    * 修改弹框属性
    * @param _visible 
@@ -49,15 +53,12 @@ const RoleAllocationMenu = (props: IProp) => {
    * 页面初始化事件
    */
   useEffect(() => {
-  }, [treeData, checkedKeys]);
-  /**
-   * 页面初始化获取数据
-   */
-  const getTable = (page: number, pageSize?: number) => {
-  };
+    getallocationRoleMenu()
+  }, [isRefrensh]);
   const getLoadTree = () => {
     _menuservice.getTree().then(res => {
       if (res.success) {
+        setRefrensh(false);
         setTreeData(res.data)
         editOperationState(true, "配置菜单")
       }
@@ -67,8 +68,8 @@ const RoleAllocationMenu = (props: IProp) => {
    * 获取角色菜单
    * @param _id 
    */
-  const getallocationRoleMenu = (_id: string) => {
-    _roleservice.getallocationRoleMenu(_id).then(res => {
+  const getallocationRoleMenu = () => {
+    _roleservice.getallocationRoleMenu(props.id).then(res => {
       if (res.success) {
         setCheckedKeys((checked) => {
           checked = res.data;
@@ -78,21 +79,12 @@ const RoleAllocationMenu = (props: IProp) => {
       }
     })
   }
-  /**
-   * 父组件调用子组件事件处理
-   */
-  useImperativeHandle(props.operationRef, () => ({
-    changeVal: (_id: string) => {
-      _id && setcurrentId(_id);
-      setCheckedKeys([])
-      getallocationRoleMenu(_id);
-    }
-  }));
   const onSave = () => {
-    _roleservice.allocationRoleMenu(currentId, checkedKeys).then(res => {
+    _roleservice.allocationRoleMenu(props.id, checkedKeys).then(res => {
       if (res.success) {
         message.success(res.message, 3)
         editOperationState(false);
+        props.onCallbackEvent && props.onCallbackEvent();
       }
     })
   }
@@ -101,6 +93,7 @@ const RoleAllocationMenu = (props: IProp) => {
    */
   const onCancel = () => {
     editOperationState(false)
+    props.onCallbackEvent && props.onCallbackEvent();
   };
   const onCheck = (data: any, info: any) => {
     setCheckedKeys((checked) => {

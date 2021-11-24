@@ -18,11 +18,8 @@ const RolePage = () => {
     const [loading, setloading] = useState<boolean>(false);
     const [paginationConfig, setPaginationConfig] = useState<initPaginationConfig>(new initPaginationConfig());
     const [tableData, setTableData] = useState<Array<IBusinessRoleDto>>([]);
-    /**
-     * 父组件获取子组件所有内容
-     */
-    const roleOperationRef = useRef<any>();
-    const roleAllocationMenuRef = useRef<any>();
+    const [subOperationElement, setOperationElement] = useState<any>(null);
+    const [subRoleAllocationMenuElement, setRoleAllocationMenuElement] = useState<any>(null);
     /**
      * 页面初始化事件
      */
@@ -32,27 +29,27 @@ const RolePage = () => {
 
     const pagination: PaginationProps = {
         ...tacitPagingProps,
-        total:paginationConfig.total,
-        current:paginationConfig.current,
-        pageSize:paginationConfig.pageSize,
+        total: paginationConfig.total,
+        current: paginationConfig.current,
+        pageSize: paginationConfig.pageSize,
         onShowSizeChange: (current: number, pageSize: number) => {
             setPaginationConfig((Pagination) => {
-                Pagination.current =current;
-                if(pageSize)
-                {
-                    Pagination.pageSize =pageSize;
+                Pagination.current = current;
+                if (pageSize) {
+                    Pagination.pageSize = pageSize;
                 }
                 return Pagination;
             });
         },
         onChange: (page: number, pageSize?: number) => {
-          
+
         }
-      };
+    };
     /**
      * 页面初始化获取数据
      */
     const getTable = (page: number, pageSize?: number) => {
+        setOperationElement(null)
         var param = {
             pageIndex: page,
             pageRow: pageSize,
@@ -117,34 +114,24 @@ const RolePage = () => {
         }
     ];
     /**
-     * 渲染子组件
-     */
-    const renderOperation = useMemo(() => {
-        return (<RoleOperation operationRef={roleOperationRef} onCallbackEvent={getTable}></RoleOperation>)
-    }, [])
-     /**
-     * 渲染子组件
-     */
-      const renderRoleAllocationMenu = useMemo(() => {
-        return (<RoleAllocationMenu operationRef={roleAllocationMenuRef} onCallbackEvent={getTable}></RoleAllocationMenu>)
-    }, [])
-
-    /**
      * 分配菜單
      * @param _id 
      */
-     const roleAllocationMenu = (_id: any) => {
-        roleAllocationMenuRef.current && roleAllocationMenuRef.current.changeVal(_id);
+    const roleAllocationMenu = (_id: any) => {
+        setRoleAllocationMenuElement(<RoleAllocationMenu id={_id} onCallbackEvent={clearsubRoleAllocationMenuElement} />)
+    }
+    const clearsubRoleAllocationMenuElement = () => {
+        setRoleAllocationMenuElement(null)
     }
     /**
      * 修改
      * @param _id 
      */
     const editRow = (_id: any) => {
-        roleOperationRef.current && roleOperationRef.current.changeVal(OperationTypeEnum.edit, _id);
+        setOperationElement(<RoleOperation operationType={OperationTypeEnum.edit} id={_id} onCallbackEvent={getTable} />)
     }
     const addChange = () => {
-        roleOperationRef.current && roleOperationRef.current.changeVal(OperationTypeEnum.add);
+        setOperationElement(<RoleOperation operationType={OperationTypeEnum.add} onCallbackEvent={getTable} />)
     }
     return (
         <div>
@@ -152,9 +139,9 @@ const RolePage = () => {
                 <Button type="primary" onClick={() => { addChange() }}>添加</Button>
                 <Button type="primary" onClick={() => { }}>查询</Button>
             </Row>
-            <Table  bordered columns={columns} dataSource={tableData} loading={loading} pagination={pagination} />
-            {renderOperation}
-            {renderRoleAllocationMenu}
+            <Table bordered columns={columns} dataSource={tableData} loading={loading} pagination={pagination} />
+            {subOperationElement}
+            {subRoleAllocationMenuElement}
         </div>)
 };
 export default RolePage;
