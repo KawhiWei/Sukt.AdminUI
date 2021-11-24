@@ -1,5 +1,5 @@
 import { Button, Col, Form, Input, Modal, Row, Switch, message } from "antd";
-import { useImperativeHandle, useState } from "react";
+import { useEffect, useImperativeHandle, useState } from "react";
 
 import { FunctionDto } from "@/core/domain/system/api-function/function-entity";
 import { IFunctionService } from "@/core/domain/system/api-function/ifunction-service";
@@ -10,9 +10,13 @@ import useHookProvider from "@/shared/customHooks/ioc-hook-provider";
 
 interface IProp {
     /**
-     * 
+     * Id
      */
-    operationRef?: any;
+    id?: string;
+    /**
+     * 操作类型
+     */
+    operationType: OperationTypeEnum
     /**
      * 操作成功回调事件
      */
@@ -41,40 +45,13 @@ const FunctionOperation = (props: IProp) => {
     const [operationState, setOperationState] = useState<IOperationConfig>({ visible: false })
     const _functionservice: IFunctionService = useHookProvider(IocTypes.FunctionService);
     const [formData] = Form.useForm();
-    const [currentId, setcurrentId] = useState<string>("");
     const [initformData, setinitformData] = useState<FunctionDto>(new FunctionDto());
-    /**
-     * 操作类型
-     */
-    const [operationType, setOperationType] = useState<OperationTypeEnum>(OperationTypeEnum.view);
-    /**
-     * 父组件调用子组件事件处理
-     */
-     useImperativeHandle(props.operationRef, () => ({
-        changeVal: (_operationType: OperationTypeEnum, _id?: string) => {
-            setOperationType(_operationType);
-            switch (_operationType) {
-                case OperationTypeEnum.add:
-                    editOperationState(true, "添加")
-                    formData.setFieldsValue(initformData);
-                    break;
-                case OperationTypeEnum.edit:
-                    _id && setcurrentId(_id);
-                    _id && onGetLoad(_id);
-                    break;
-                case OperationTypeEnum.view:
-                    editOperationState(true, "查看")
-                    break;
-            }
-        }
-    }));
-    
     /**
      * 底部栏OK事件
      */
     const onFinish = () => {
         let param = formData.getFieldsValue();
-        switch (operationType) {
+        switch (props.operationType) {
             case OperationTypeEnum.add:
                 onCreate(param);
                 break;
@@ -90,6 +67,7 @@ const FunctionOperation = (props: IProp) => {
          */
     const onCancel = () => {
         editOperationState(false)
+        props.onCallbackEvent && props.onCallbackEvent()
     };
     /**
          * 修改弹框属性
@@ -103,14 +81,29 @@ const FunctionOperation = (props: IProp) => {
      * 编辑获取一个表单
      * @param _id 
      */
-     const onGetLoad = (_id: string) => {
-        _functionservice.getloadRow(_id).then(res => {
+    const onGetLoad = () => {
+        switch (props.operationType) {
+            case OperationTypeEnum.add:
+                editOperationState(true, "添加")
+                formData.setFieldsValue(initformData);
+                break;
+            case OperationTypeEnum.view:
+                editOperationState(true, "查看")
+                break;
+        }
+        props.id && _functionservice.getloadRow(props.id).then(res => {
             if (res.success) {
                 formData.setFieldsValue(res.data);
                 editOperationState(true, "查看")
             }
         })
     }
+    /**
+     * 页面初始化事件
+     */
+    useEffect(() => {
+        onGetLoad()
+    }, [formData]);
     /**
          * 添加
          * @param _data 
@@ -129,7 +122,7 @@ const FunctionOperation = (props: IProp) => {
      * @param _data 
      */
     const onEdit = (_data: FunctionDto) => {
-        _functionservice.update(currentId, _data).then(res => {
+        props.id && _functionservice.update(props.id, _data).then(res => {
             if (res.success) {
                 setOperationState({ visible: false })
                 message.success(res.message, 3)

@@ -18,10 +18,7 @@ const FunctionPage = () => {
     const [loading, setloading] = useState<boolean>(false);
     const [paginationConfig, setPaginationConfig] = useState<initPaginationConfig>(new initPaginationConfig());
     const [tableData, setTableData] = useState<Array<IFunctionDto>>([]);
-    /**
-     * 父组件获取子组件所有内容
-     */
-    const OperationRef = useRef<any>();
+    const [subOperationElement, setOperationElement] = useState<any>(null);
     /**
      * 页面初始化事件
      */
@@ -51,6 +48,7 @@ const FunctionPage = () => {
      * 页面初始化获取数据
      */
     const getTable = (page: number, pageSize?: number) => {
+        setOperationElement(null);
         var param = {
             pageIndex: page,
             pageRow: pageSize,
@@ -123,23 +121,16 @@ const FunctionPage = () => {
                 </div>
             }
         }
-    ];
-    /**
-     * 渲染子组件
-     */
-    const renderOperation = useMemo(() => {
-        return (<FunctionOperation operationRef={OperationRef} onCallbackEvent={getTable}></FunctionOperation>)
-    }, [])
-    
+    ];    
     /**
      * 修改任务
      * @param _id 
      */
     const editRow = (_id: any) => {
-        OperationRef.current && OperationRef.current.changeVal(OperationTypeEnum.edit, _id);
+        setOperationElement(<FunctionOperation onCallbackEvent={getTable} operationType={OperationTypeEnum.edit} id={_id}/>)
     }
     const addChange = () => {
-        OperationRef.current && OperationRef.current.changeVal(OperationTypeEnum.add);
+        setOperationElement(<FunctionOperation onCallbackEvent={getTable} operationType={OperationTypeEnum.add}/>)
     }
     return (
         <div>
@@ -148,7 +139,7 @@ const FunctionPage = () => {
                 <Button type="primary" onClick={() => { }}>查询</Button>
             </Row>
             <Table bordered columns={columns} dataSource={tableData} loading={loading} pagination={pagination} />
-            {renderOperation}
+            {subOperationElement}
         </div>)
 };
 export default FunctionPage;
