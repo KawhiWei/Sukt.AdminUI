@@ -20,10 +20,7 @@ const MenuPage = () => {
     const _menuservice: IMenuService = useHookProvider(IocTypes.MenuService);
     const [loading, setloading] = useState<boolean>(false);
     const [paginationConfig, setPaginationConfig] = useState<initPaginationConfig>(new initPaginationConfig());
-    /**
-     * 父组件获取子组件所有内容
-     */
-    const menuOperationRef = useRef<any>();
+    const [subOperationElement, setOperationElement] = useState<any>(null);
     /**
      * 页面初始化事件
      */
@@ -34,6 +31,7 @@ const MenuPage = () => {
      * 页面初始化获取数据
      */
     const getTable = () => {
+        setOperationElement(null);
         _menuservice.gettable().then((x) => {
             if (x.success) {
                 setPaginationConfig((Pagination) => {
@@ -71,27 +69,7 @@ const MenuPage = () => {
 
         }
     };
-    /**
-     * 渲染子组件
-     */
-    const renderOperation = useMemo(() => {
-        return (<MenuOperation operationRef={menuOperationRef} onCallbackEvent={getTable}></MenuOperation>)
-    }, [])
-    const [tableData, setTableData] = useState<Array<IBusinessMenuDto>>([{
-        id: "121214545",
-        name: "ada",
-        path: "21312",
-        component: "21312",
-        componentName: "21312",
-        parentId: "21312",
-        icon: "21312",
-        parentNumber: "21312",
-        microName: "21312",
-        isShow: false,
-        sort: 21312,
-        buttonClick: "21312",
-        type: MenuEnum.EMenuType.Menu,
-    }]);
+    const [tableData, setTableData] = useState<Array<IBusinessMenuDto>>([]);
     const columns = [
         {
             title: "菜单名称",
@@ -158,10 +136,10 @@ const MenuPage = () => {
      * @param _id 
      */
     const editRow = (_id: any) => {
-        menuOperationRef.current && menuOperationRef.current.changeVal(OperationTypeEnum.edit, _id);
+        setOperationElement(<MenuOperation operationType={OperationTypeEnum.edit} id={_id} onCallbackEvent={getTable}></MenuOperation>)
     }
     const addChange = () => {
-        menuOperationRef.current && menuOperationRef.current.changeVal(OperationTypeEnum.add);
+        setOperationElement(<MenuOperation  operationType={OperationTypeEnum.add} onCallbackEvent={getTable}></MenuOperation>)
     }
     return (<div>
         <Row>
@@ -171,7 +149,7 @@ const MenuPage = () => {
         <Row>
             <Col span={24}><Table bordered columns={columns} dataSource={tableData} loading={loading} pagination={pagination} /></Col>
         </Row>
-        {renderOperation}
+        {subOperationElement}
     </div>)
 };
 export default MenuPage;
