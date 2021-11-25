@@ -121,6 +121,9 @@ const RoleOperation = (props: IProp) => {
                 message.success(res.message, 3)
                 props.onCallbackEvent && props.onCallbackEvent();
             }
+            else{
+                message.error(res.message, 3)
+            }
         })
     }
     /**

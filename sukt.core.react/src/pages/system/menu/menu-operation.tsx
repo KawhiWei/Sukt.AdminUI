@@ -1,6 +1,6 @@
 import * as MenuEnum from "../../../core/constans/enum/menu";
 
-import { Button, Form, Input, InputNumber, Modal, Select, Switch, message } from "antd";
+import { Button, Col, Form, Input, InputNumber, Modal, Row, Select, Switch, message } from "antd";
 import { useEffect, useImperativeHandle, useState } from "react";
 
 import { IMenuService } from "@/core/domain/system/menu/service/imenu-service";
@@ -29,8 +29,8 @@ interface IProp {
  * form表单布局设置
  */
 const formItemLayout = {
-    labelCol: { span: 4 },
-    wrapperCol: { span: 19 },
+    labelCol: { span: 7 },
+    wrapperCol: { span: 17 },
 };
 const validateMessages = {
     required: "${label} is required!",
@@ -93,7 +93,7 @@ const MenuOperation = (props: IProp) => {
     /**
      * 底部栏OK事件
      */
-    const onOk = () => {
+    const onFinish = () => {
         let param = formData.getFieldsValue();
         switch (props.operationType) {
             case OperationTypeEnum.add:
@@ -134,71 +134,102 @@ const MenuOperation = (props: IProp) => {
     }
     return (
         <div>
-            <Modal width={1000} getContainer={false} maskClosable={false} title={operationState.title} closable={false} visible={operationState.visible} onCancel={onCancel} onOk={onOk}
-                footer={[
-                    <Button key="back" onClick={onCancel}>
-                        取消
-                    </Button>,
-                    <Button key="submit" type="primary" onClick={onOk}>
-                        保存
-                    </Button>
-                ]}>
+            <Modal width={1000} getContainer={false} maskClosable={false} title={operationState.title} closable={false} visible={operationState.visible}
+                footer={null}>
                 <Form form={formData}
                     {...formItemLayout}
                     name="nest-messages"
+                    onFinish={onFinish}
                     validateMessages={validateMessages}>
-                    <Form.Item
-                        name="name"
-                        label="菜单名">
-                        <Input />
-                    </Form.Item>
-                    <Form.Item
-                        name="path"
-                        label="路径">
-                        <Input />
-                    </Form.Item>
-                    <Form.Item
-                        name="component"
-                        label="对应组件">
-                        <Input />
-                    </Form.Item>
-                    <Form.Item
-                        name="componentName"
-                        label="组件名称">
-                        <Input />
-                    </Form.Item>
-                    <Form.Item
-                        name="icon"
-                        label="菜单icon">
-                        <Input />
-                    </Form.Item>
-                    <Form.Item
-                        name="microName"
-                        label="菜单对应的子应用">
-                        <Input />
-                    </Form.Item>
-                    <Form.Item
-                        name="type"
-                        label="类型">
-                        <Select>
-                            {
-                                MenuTypeEnumList.map(item => {
-                                    return <Select.Option value={item.value}>{item.label}</Select.Option>
-                                })
-                            }
-                        </Select>
-                    </Form.Item>
-                    <Form.Item
-                        label="是否显示"
-                        valuePropName="checked"
-                        name="isShow">
-                        <Switch />
-                    </Form.Item>
-                    <Form.Item
-                        name="sort"
-                        label="排序">
-                        <InputNumber />
-                    </Form.Item>
+                    <Row>
+                        <Col span="12">
+                            <Form.Item
+                                name="name"
+                                label="菜单名">
+                                <Input />
+                            </Form.Item>
+                        </Col>
+                        <Col span="12">
+                            <Form.Item
+                                name="path"
+                                label="路径">
+                                <Input />
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col span="12">
+                            <Form.Item
+                                name="component"
+                                label="对应组件">
+                                <Input />
+                            </Form.Item>
+                        </Col>
+                        <Col span="12">
+                            <Form.Item
+                                name="componentName"
+                                label="组件名称">
+                                <Input />
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col span="12">
+                            <Form.Item
+                                name="icon"
+                                label="菜单icon">
+                                <Input />
+                            </Form.Item>
+                        </Col>
+                        <Col span="12">
+
+                            <Form.Item
+                                name="microName"
+                                label="菜单对应的子应用">
+                                <Input />
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col span="12">
+                        <Form.Item
+                            name="type"
+                            label="类型">
+                            <Select>
+                                {
+                                    MenuTypeEnumList.map(item => {
+                                        return <Select.Option value={item.value}>{item.label}</Select.Option>
+                                    })
+                                }
+                            </Select>
+                        </Form.Item>
+                        </Col>
+                        <Col span="12">
+                            <Form.Item
+                                label="是否显示"
+                                valuePropName="checked"
+                                name="isShow">
+                                <Switch />
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col span="12">
+                            <Form.Item
+                                name="sort"
+                                label="排序">
+                                <InputNumber />
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col span="24" style={{ textAlign: 'right' }}>
+                            <Form.Item>
+                                <Button style={{ margin: '0 8px' }} onClick={() => onCancel()}>取消</Button>
+                                <Button style={{ margin: '0 8px' }} type="primary" htmlType="submit">保存</Button>
+                            </Form.Item>
+                        </Col>
+                    </Row>
                 </Form>
             </Modal>
         </div>

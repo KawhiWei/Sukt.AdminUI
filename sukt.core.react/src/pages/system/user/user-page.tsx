@@ -20,6 +20,7 @@ const UserPage = () => {
     const [paginationConfig, setPaginationConfig] = useState<initPaginationConfig>(new initPaginationConfig());
     const [subOperationElement, setOperationElement] = useState<any>(null);
     const [subAllocationRoleElement, setAllocationRoleElement] = useState<any>(null);
+    const [tableData, setTableData] = useState<Array<IBusinessUserDto>>([]);
     const pagination: PaginationProps = {
         ...tacitPagingProps,
         total: paginationConfig.total,
@@ -145,7 +146,7 @@ const UserPage = () => {
             dataIndex: "id",
             key: "id",
             render: (text: any, record: IBusinessUserDto) => {
-                return <div>
+                return record.isSystem ?null: <div>
                     <Button type="primary" onClick={() => editRow(record.id)}>编辑</Button>
                     <Button type="primary" onClick={() => userAllocationRole(record.id)}>分配角色</Button>
                     <Button type="primary" danger onClick={() => deleteRow(record.id)}>删除</Button>
@@ -153,7 +154,6 @@ const UserPage = () => {
             }
         }
     ];
-    const [tableData, setTableData] = useState<Array<IBusinessUserDto>>([]);
     /**
      * 修改任务
      * @param _id 

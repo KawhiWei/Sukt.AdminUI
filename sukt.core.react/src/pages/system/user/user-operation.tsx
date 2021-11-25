@@ -36,7 +36,7 @@ const formItemLayout = {
 /**
  * 日期框格式
  */
-const dateFormat = 'YYYY-MM-DD HH:mm:ss';
+const dateFormat = 'YYYY-MM-DD';
 const validateMessages = {
     required: "${label} 不可为空!",
     types: {
@@ -51,7 +51,7 @@ const UserOperation = (props: IProp) => {
     const _userservice: IUserService = useHookProvider(IocTypes.UserService);
     const [operationState, setOperationState] = useState<IOperationConfig>({ visible: false })
     const [initformData, setinitformData] = useState<UserInputDto>(new UserInputDto());
-    const [birthday, setBirthday] = useState<string>("");
+    const [birthday, setBirthday] = useState<string>(moment().format(dateFormat));
     const [formData] = Form.useForm();
     /**
      * 修改弹框属性
@@ -122,6 +122,7 @@ const UserOperation = (props: IProp) => {
         if (props.operationType === OperationTypeEnum.add) {
             param.passwordHash = formfieldsValue.passwordHash;
         }
+        console.log(birthday)
         // console.log(formfieldsValue['birthday'].format('YYYY-MM-DD HH:mm:ss'));
         // console.log(formfieldsValue['birthday'].format('YYYY-MM-DD'));
         switch (props.operationType) {
@@ -145,6 +146,8 @@ const UserOperation = (props: IProp) => {
                 setOperationState({ visible: false })
                 message.success(res.message, 3)
                 props.onCallbackEvent && props.onCallbackEvent();
+            } else{
+                message.error(res.message, 3)
             }
         })
     }
@@ -158,6 +161,8 @@ const UserOperation = (props: IProp) => {
                 setOperationState({ visible: false })
                 message.success(res.message, 3)
                 props.onCallbackEvent && props.onCallbackEvent();
+            } else{
+                message.error(res.message, 3)
             }
         })
     }
@@ -249,7 +254,8 @@ const UserOperation = (props: IProp) => {
                         <Col span="12">
                             <Form.Item
                                 label="生日">
-                                <DatePicker onChange={editBirthday} value={moment(birthday, 'YYYY-MM-DD')} />
+                                    <DatePicker onChange={editBirthday}  value={moment(birthday, 'YYYY-MM-DD')} />
+                                {/* <DatePicker onChange={editBirthday}  /> */}
                             </Form.Item>
                         </Col>
                         <Col span="12">

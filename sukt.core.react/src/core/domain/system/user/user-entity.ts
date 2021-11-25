@@ -71,6 +71,10 @@ export interface IBusinessUserBase {
     userType: EUserType;
 }
 export interface IBusinessUserDto extends IBusinessUserBase, IEntity<string> {
+    /**
+     * 是否是系统账号
+     */
+    isSystem:boolean
 
 }
 /**
