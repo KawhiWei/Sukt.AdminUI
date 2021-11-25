@@ -1,3 +1,5 @@
+import './menu-tab.less'
+
 import { IMenuOutput } from "@/shared/menu/IMenu";
 import { Link } from 'react-router-dom';
 import { Menu } from "antd";
@@ -8,19 +10,20 @@ const isShow = (_children: IMenuOutput[]) => {
 }
 interface IProp {
   menus: IMenuOutput[]
+  defaultpath:any
+
 }
 class Menus extends React.Component<IProp, any> {
   renderMenu = (data: IMenuOutput[]) => {
     return data.map(item => {
       if (isShow(item.children)) {
-        return <Menu.SubMenu key={item.id} title={item.name}>
+        return <Menu.SubMenu  key={item.id} title={item.name}>
           {this.renderMenu(item.children)}
         </Menu.SubMenu>
       }
       return <Menu.Item key={item.id} title={item.name}>
         <Link to={item.path}>{item.name}</Link>
       </Menu.Item>
-
     })
   }
   componentWillMount() {
@@ -29,12 +32,14 @@ class Menus extends React.Component<IProp, any> {
       menuTreeNode
     })
   }
-
   render() {
     return (
-      <Menu mode="inline" theme="dark" >
+      <div>
+        <Menu mode="inline"  selectedKeys={[this.props.defaultpath]} theme="dark" >
         {this.state.menuTreeNode}
       </Menu>
+      </div>
+
     )
   }
 }

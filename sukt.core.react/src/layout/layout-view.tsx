@@ -17,10 +17,11 @@ interface IProp {
 
 const LayoutView = (props: IProp) => {
     const [routes] = useState(props.route.children);
+    console.log(props.location.pathname);
     return (
         <Layout className="sukt-layout">
             <BrowserRouter>
-                <LayoutSider menus={menuList} />
+                <LayoutSider menus={menuList} defaultpath="/user"/>
                 <Layout>
                     <Layoutheader />
                     <Layout.Content>
