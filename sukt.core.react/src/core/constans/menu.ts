@@ -3,7 +3,7 @@ import { IMenuOutput } from "@/shared/menu/IMenu";
 export const menuList: IMenuOutput[] = [
   {
     id: "13245",
-    name: "主页",
+    name: "首页",
     path: "/home",
     component: "pages/home/home",
     tabs: [],
@@ -36,24 +36,6 @@ export const menuList: IMenuOutput[] = [
     isShow: true,
     type: 0,
     children: [
-    //   {
-    //   id: "121212",
-    //   name: "测试",
-    //   path: "/test",
-    //   component: "pages/test-page/test-page",
-    //   tabs: [],
-    //   buttonClick: "",
-    //   buttons: [],
-    //   parentId: "000",
-    //   icon: "",
-    //   parentNumber: "",
-    //   microName: "",
-    //   componentName: "test-page",
-    //   sort: 0,
-    //   isShow: true,
-    //   type: 0,
-    //   children: [],
-    // },
     {
       id: "12122212",
       name: "菜单管理",
