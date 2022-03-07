@@ -1,13 +1,15 @@
 import "./home-page.less"
 
 import { Card, Col, Row } from "antd";
-import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
+import { CaretDownOutlined, CaretUpOutlined,FormOutlined } from '@ant-design/icons';
 import { useEffect, useState } from "react";
-
+// import Draggable from 'react-draggable'; 
 import StackedLineCharts from "./stacked-line-charts";
 
 const HomePage = () => {
   const [stackedLineChart]=useState<any>(<StackedLineCharts/>);
+
+
   return (
     <div>
       <Row gutter={[16, 16]}>
@@ -174,6 +176,13 @@ const HomePage = () => {
           </Card>
         </Col>
       </Row>
+      <div draggable="true" style={{ width: '120px', textAlign: 'center' , height: '32px',backgroundColor:'#358dff',border: '1px dashed #ccc'}} >
+      <FormOutlined/><span>输入框</span>
+      </div>
+
+      <div id="container" style={{width:'1000px', height:'600px', margin:'100px',backgroundColor:'blue',border: '1px dashed #ccc'}}>
+
+      </div>
     </div>
   )
 }

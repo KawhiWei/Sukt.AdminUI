@@ -18,19 +18,19 @@ export default class MenuService extends BaseService implements IMenuService {
     return this.dataRequest.getRequest(MenuApi.getTree)
   }
   delete(_id: string): Promise<IServerPageReturn<any>> {
-    return this.dataRequest.deleteRequest(`${MenuApi.deleteMenu}/${_id}`)
+    return this.dataRequest.deleteRequest(`${MenuApi.resetfulApi}/${_id}`)
   }
   gettable(): Promise<IServerPageReturn<IBusinessMenuDto>> {
-    return this.dataRequest.getRequest(MenuApi.gettable)
+    return this.dataRequest.getRequest(`${MenuApi.resetfulApi}/${MenuApi.alls}`)
   }
   create(_param: MenuInputDto): Promise<IServerReturn<any>> {
-    return this.dataRequest.postRequest(MenuApi.createMenu, _param)
+    return this.dataRequest.postRequest(MenuApi.resetfulApi, _param)
   }
   update(_id:string,_param: MenuInputDto): Promise<IServerReturn<any>> {
-    return this.dataRequest.putRequest(`${MenuApi.updateMenu}/${_id}`, _param)
+    return this.dataRequest.putRequest(`${MenuApi.resetfulApi}/${_id}`, _param)
   }
   getloadRow(_id:string): Promise<IServerReturn<any>> {
-    return this.dataRequest.getRequest(`${MenuApi.getloadRowById}/${_id}`)
+    return this.dataRequest.getRequest(`${MenuApi.resetfulApi}/${_id}`)
   }
   //#region 【properties】
   menuArr: MenuInterface.IMenuOutput[] = [];

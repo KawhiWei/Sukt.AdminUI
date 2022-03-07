@@ -10,10 +10,6 @@ export interface IBusinessUserBase {
      */
     userName: string;
     /**
-     * 登录账号
-     */
-    normalizedUserName: string;
-    /**
      * 用户昵称
      */
     nickName: string;
@@ -26,41 +22,9 @@ export interface IBusinessUserBase {
      */
     passwordHash: string;
     /**
-     * 用户头像
-     */
-    headImg: string;
-    /**
      * 手机号码
      */
     phoneNumber: string;
-    /**
-     * 生日
-     */
-    birthday: string;
-    /**
-     * 学历
-     */
-    education: string;
-    /**
-     * 专业技术等级
-     */
-    technicalLevel: string;
-    /**
-     * 身份证号
-     */
-    idCard: string;
-    /**
-     * 是否启用
-     */
-    isEnable: boolean;
-    /**
-    * 职务
-    */
-    duties: string;
-    /**
-    * 部门
-    */
-    department: string;
     /**
     * 性别
     */
@@ -83,18 +47,9 @@ export interface IBusinessUserDto extends IBusinessUserBase, IEntity<string> {
 export class UserInputDto implements IBusinessUserBase {
     nickName: string = "";
     userName: string = "";
-    normalizedUserName: string = "";
     email: string = "";
     passwordHash: string = "";
-    headImg: string = "";
     phoneNumber: string = "";
-    birthday: string = "";
-    education: string = "";
-    technicalLevel: string = "";
-    idCard: string = "";
-    isEnable: boolean = true;
-    duties: string = "";
-    department: string = "";
     sex: string = "男";
     userType: EUserType = EUserType.ordinaryUser;
 }

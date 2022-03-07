@@ -140,7 +140,7 @@ const MultitenantPage = () => {
             if (res.success) {
                 message.success(res.message, 3)
                 getTable(paginationConfig.current, paginationConfig.pageSize)
-            }else {
+            } else {
                 message.error(res.message, 3)
             }
         });

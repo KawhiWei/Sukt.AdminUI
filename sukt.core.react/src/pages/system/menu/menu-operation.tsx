@@ -95,12 +95,14 @@ const MenuOperation = (props: IProp) => {
      */
     const onFinish = () => {
         let param = formData.getFieldsValue();
+        // console.log(param)
+        let inputDto=new MenuInputDto(param.name,param.path,param.component,param.componentName,"","","","",);
         switch (props.operationType) {
             case OperationTypeEnum.add:
-                onCreate(param);
+                onCreate(inputDto);
                 break;
             case OperationTypeEnum.edit:
-                onEdit(param);
+                onEdit(inputDto);
                 break;
             case OperationTypeEnum.view:
                 break;
@@ -111,6 +113,7 @@ const MenuOperation = (props: IProp) => {
      * @param _data 
      */
     const onCreate = (_data: MenuInputDto) => {
+        console.log(_data)
         _menuservice.create(_data).then(res => {
             if (res.success) {
                 setOperationState({ visible: false })
@@ -124,6 +127,7 @@ const MenuOperation = (props: IProp) => {
      * @param _data 
      */
     const onEdit = (_data: MenuInputDto) => {
+        console.log(_data)
         props.id && _menuservice.update(props.id, _data).then(res => {
             if (res.success) {
                 setOperationState({ visible: false })
@@ -193,7 +197,7 @@ const MenuOperation = (props: IProp) => {
                     <Row>
                         <Col span="12">
                         <Form.Item
-                            name="type"
+                            name="menuType"
                             label="类型">
                             <Select>
                                 {
@@ -204,16 +208,6 @@ const MenuOperation = (props: IProp) => {
                             </Select>
                         </Form.Item>
                         </Col>
-                        <Col span="12">
-                            <Form.Item
-                                label="是否显示"
-                                valuePropName="checked"
-                                name="isShow">
-                                <Switch />
-                            </Form.Item>
-                        </Col>
-                    </Row>
-                    <Row>
                         <Col span="12">
                             <Form.Item
                                 name="sort"

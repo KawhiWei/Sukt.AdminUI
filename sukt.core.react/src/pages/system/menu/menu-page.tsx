@@ -107,13 +107,13 @@ const MenuPage = () => {
             key: "id",
             render: (text: any, record: IBusinessMenuDto) => {
                 return <div>
-                    {record.type === MenuEnum.EMenuType.Menu && (
+                    {record.menuType === MenuEnum.EMenuType.Menu && (
                         <Tag color="cyan">菜单</Tag>
                     )}
-                    {record.type === MenuEnum.EMenuType.Button && (
+                    {record.menuType === MenuEnum.EMenuType.Button && (
                         <Tag color="blue">按钮</Tag>
                     )}
-                    {record.type === MenuEnum.EMenuType.Tab && (
+                    {record.menuType === MenuEnum.EMenuType.Tab && (
                         <Tag color="purple">Tab标签页</Tag>
                     )}
                 </div>

@@ -15,7 +15,7 @@ export interface IRoleService {
   /**
    * 获取表格数据
    */
-  getpage(_request?:any): Promise<IServerPageReturn<any>>;
+  getpage(_request?:any): Promise<IServerReturn<IServerPageReturn<any>>>;
   /**
    * 删除一行数据
    * @param _id 
@@ -27,15 +27,11 @@ export interface IRoleService {
    */
   getloadRow(_id:string): Promise<IServerReturn<IBusinessRoleDto>> ;
   /**
-   * 获取所有角色列表
-   */
-  getseletedlist(): Promise<IServerReturn<Array<IBusinessRoleDto>>>;
-  /**
    * 角色分配菜单
    * @param _id 
    * @param menuid 
    */
-  allocationRoleMenu(_id: string,menuid:Array<string>): Promise<IServerReturn<any>>;
+   allocationMenuForRole(_id: string,menuid:Array<string>): Promise<IServerReturn<any>>;
   /**
    * 获取角色分配过的菜单
    * @param _id 

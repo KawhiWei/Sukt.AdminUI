@@ -88,9 +88,8 @@ const UserOperation = (props: IProp) => {
                 break;
         }
         props.id && _userservice.getloadRow(props.id).then(res => {
-            if (res.success) {
+            if (res.success && res.data!=null) {
                 console.log(res);
-                setBirthday(res.data.birthday)
                 formData.setFieldsValue(res.data);
                 editOperationState(true, "查看")
             }
@@ -108,16 +107,10 @@ const UserOperation = (props: IProp) => {
      */
     const onFinish = (formfieldsValue: any) => {
         let param = new UserInputDto();
-        param.normalizedUserName = formfieldsValue.normalizedUserName;
         param.userName = formfieldsValue.userName;
         param.nickName = formfieldsValue.nickName;
         param.phoneNumber = formfieldsValue.phoneNumber;
         param.email = formfieldsValue.email;
-        param.idCard = formfieldsValue.idCard;
-        param.isEnable = formfieldsValue.isEnable;
-        param.birthday = birthday;
-        param.education = formfieldsValue.education;
-        param.userType = formfieldsValue.userType;
         param.sex = formfieldsValue.sex;
         if (props.operationType === OperationTypeEnum.add) {
             param.passwordHash = formfieldsValue.passwordHash;
@@ -175,11 +168,11 @@ const UserOperation = (props: IProp) => {
                     onFinish={onFinish}
                     validateMessages={validateMessages}>
                     <Row>
-                        <Col span="12">
+                    <Col span="12">
                             <Form.Item
-                                name="normalizedUserName"
+                                name="userName"
                                 rules={[{ required: true }]}
-                                label="登录账号">
+                                label="姓名">
                                 <Input />
                             </Form.Item>
                         </Col>
@@ -199,22 +192,12 @@ const UserOperation = (props: IProp) => {
                     <Row>
                         <Col span="12">
                             <Form.Item
-                                name="userName"
-                                rules={[{ required: true }]}
-                                label="姓名">
-                                <Input />
-                            </Form.Item>
-                        </Col>
-                        <Col span="12">
-                            <Form.Item
                                 name="nickName"
                                 rules={[{ required: true }]}
                                 label="用户昵称">
                                 <Input />
                             </Form.Item>
                         </Col>
-                    </Row>
-                    <Row>
                         <Col span="12">
                             <Form.Item
                                 name="phoneNumber"
@@ -223,59 +206,15 @@ const UserOperation = (props: IProp) => {
                                 <Input />
                             </Form.Item>
                         </Col>
+                    </Row>
+                    <Row>
+                        
                         <Col span="12">
                             <Form.Item
                                 name="email"
                                 rules={[{ required: true, type: 'email' }]}
                                 label="电子邮箱">
                                 <Input />
-                            </Form.Item>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col span="12">
-                            <Form.Item
-                                rules={[{ required: true, pattern: /^[1-9][0-9]{5}(19|20)[0-9]{2}((01|03|05|07|08|10|12)(0[1-9]|[1-2][0-9]|30|31)|(04|06|09|11)(0[1-9]|[1-2][0-9]|30)|02(0[1-9]|[1-2][0-9]))[0-9]{3}([0-9]|x|X)$/, message: "身份证 格式不符合要求!" }]}
-                                name="idCard"
-                                label="身份证号">
-                                <Input />
-                            </Form.Item>
-                        </Col>
-                        <Col span="12">
-                            <Form.Item
-                                name="isEnable"
-                                valuePropName="checked"
-                                label="是否启用">
-                                <Switch />
-                            </Form.Item>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col span="12">
-                            <Form.Item
-                                label="生日">
-                                    <DatePicker onChange={editBirthday}  value={moment(birthday, 'YYYY-MM-DD')} />
-                                {/* <DatePicker onChange={editBirthday}  /> */}
-                            </Form.Item>
-                        </Col>
-                        <Col span="12">
-                            <Form.Item
-                                name="education"
-                                label="学历">
-                                <Input />
-                            </Form.Item>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col span="12">
-                            <Form.Item label="用户类型" name="userType">
-                                <Select>
-                                    {
-                                        UserTypeEnumList.map(item => {
-                                            return <Select.Option value={item.value}>{item.label}</Select.Option>
-                                        })
-                                    }
-                                </Select>
                             </Form.Item>
                         </Col>
                         <Col span="12">

@@ -93,14 +93,14 @@ const UserAllocationRole = (props: IProp) => {
         _roleservice.getpage(param).then((x) => {
             if (x.success) {
                 setPaginationConfig((Pagination) => {
-                    Pagination.total = x.total;
+                    Pagination.total = x.data.total;
                     return Pagination;
                 });
-                x.data.map((item: any, index: number) => {
+                x.data.data.map((item: any, index: number) => {
                     item.key = item.id;
                     return item;
                 });
-                setTableData(x.data);
+                setTableData(x.data.data);
                 if (!operationState.visible) {
                     editOperationState(true);
                 }

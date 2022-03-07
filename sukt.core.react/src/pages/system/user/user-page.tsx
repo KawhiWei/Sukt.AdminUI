@@ -53,14 +53,14 @@ const UserPage = () => {
         _userservice.getpage().then((x) => {
             if (x.success) {
                 setPaginationConfig((Pagination) => {
-                    Pagination.total = x.total;
+                    Pagination.total = x.data.total;
                     return Pagination;
                 });
-                x.data.map((item: any, index: number) => {
+                x.data.data.map((item: any, index: number) => {
                     item.key = item.id;
                     return item;
                 });
-                setTableData(x.data);
+                setTableData(x.data.data);
                 setloading(false);
             }
         });
@@ -87,11 +87,6 @@ const UserPage = () => {
             key: "userName",
         },
         {
-            title: "登录账号",
-            dataIndex: "normalizedUserName",
-            key: "normalizedUserName",
-        },
-        {
             title: "用户昵称",
             dataIndex: "nickName",
             key: "nickName",
@@ -110,26 +105,6 @@ const UserPage = () => {
             title: "性别",
             dataIndex: "sex",
             key: "sex",
-        },
-        {
-            title: "身份证号",
-            dataIndex: "idCard",
-            key: "idCard",
-        },
-        {
-            title: "生日",
-            dataIndex: "birthday",
-            key: "birthday",
-        },
-        {
-            title: "学历",
-            dataIndex: "education",
-            key: "education",
-        },
-        {
-            title: "专业技术等级",
-            dataIndex: "technicalLevel",
-            key: "technicalLevel",
         },
         {
             title: "是否启用",

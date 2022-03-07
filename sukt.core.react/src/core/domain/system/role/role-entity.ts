@@ -6,13 +6,13 @@ export interface IBusinessRoleBase {
      */
     name: string;
     /**
-     * 标准化角色名称
-     */
-    normalizedName: string;
-    /**
      * 是否是超级管理员
      */
     isAdmin: boolean;
+    /**
+     * 是否默认
+     */
+    isDefault:boolean;
 }
 /**
  * 
@@ -30,12 +30,12 @@ export class RoleInputDto implements IBusinessRoleBase {
      */
     name: string = "";
     /**
-     * 标准化角色名称
-     */
-    normalizedName: string = "";
-    /**
      * 是否是超级管理员
      */
     isAdmin: boolean = false;
+    /**
+     * 是否默认
+     */
+    isDefault:boolean=false;
 }
 

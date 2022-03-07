@@ -5,8 +5,9 @@ export interface IServerReturn<T> {
     type: number;
   }
   
-export interface IServerPageReturn<T> extends IServerReturn<T> {
+export interface IServerPageReturn<T> {
     total: number;
+    data:Array<T>
   }
 /**
  * 通用下拉框模型

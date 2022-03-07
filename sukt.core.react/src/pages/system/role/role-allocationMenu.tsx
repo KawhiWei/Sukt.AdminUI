@@ -80,7 +80,7 @@ const RoleAllocationMenu = (props: IProp) => {
     })
   }
   const onSave = () => {
-    _roleservice.allocationRoleMenu(props.id, checkedKeys).then(res => {
+    _roleservice.allocationMenuForRole(props.id, checkedKeys).then(res => {
       if (res.success) {
         message.success(res.message, 3)
         editOperationState(false);

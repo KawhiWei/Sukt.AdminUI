@@ -54,17 +54,19 @@ const RolePage = () => {
             pageIndex: page,
             pageRow: pageSize,
         }
+        
         _roleservice.getpage(param).then((x) => {
             if (x.success) {
                 setPaginationConfig((Pagination) => {
-                    Pagination.total = x.total;
+                    Pagination.total = x.data.total;
                     return Pagination;
                 });
-                x.data.map((item: any, index: number) => {
+                x.data.data.map((item: any, index: number) => {
                     item.key = item.id;
                     return item;
                 });
-                setTableData(x.data);
+                console.log(x.data.data)
+                setTableData(x.data.data);
                 setloading(false);
             }
         });
@@ -86,17 +88,32 @@ const RolePage = () => {
             key: "name",
         },
         {
-            title: "标准化角色名称",
-            dataIndex: "normalizedName",
-            key: "normalizedName",
-        },
-        {
             title: "是否启用",
             dataIndex: "id",
             key: "id",
             render: (text: any, record: IBusinessRoleDto) => {
                 return <div>
-
+                    {record.isAdmin && (
+                        <Tag color="cyan">是</Tag>
+                    )}
+                    {!record.isAdmin && (
+                        <Tag color="error">否</Tag>
+                    )}
+                </div>
+            }
+        },
+        {
+            title: "是否默认",
+            dataIndex: "id",
+            key: "id",
+            render: (text: any, record: IBusinessRoleDto) => {
+                return <div>
+                    {record.isDefault && (
+                        <Tag color="cyan">是</Tag>
+                    )}
+                    {!record.isDefault && (
+                        <Tag color="error">否</Tag>
+                    )}
                 </div>
             }
         },

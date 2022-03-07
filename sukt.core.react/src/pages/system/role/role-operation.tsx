@@ -97,7 +97,6 @@ const RoleOperation = (props: IProp) => {
     const onFinish = (formfieldsValue: any) => {
         let param = new RoleInputDto();
         param.name = formfieldsValue.name;
-        param.normalizedName = formfieldsValue.normalizedName;
         param.isAdmin = formfieldsValue.isAdmin;
         switch (props.operationType) {
             case OperationTypeEnum.add:
@@ -154,14 +153,6 @@ const RoleOperation = (props: IProp) => {
                                 name="name"
                                 rules={[{ required: true }]}
                                 label="角色名称">
-                                <Input />
-                            </Form.Item>
-                        </Col>
-                        <Col span="12">
-                            <Form.Item
-                                name="normalizedName"
-                                rules={[{ required: true }]}
-                                label="标准角色名称">
                                 <Input />
                             </Form.Item>
                         </Col>
