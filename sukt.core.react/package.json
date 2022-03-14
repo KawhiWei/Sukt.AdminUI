@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@antv/x6": "^1.30.2",
     "@babel/plugin-proposal-decorators": "^7.12.12",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
@@ -24,6 +25,8 @@
     "qiankun": "^2.4.0",
     "react": "^17.0.1",
     "react-app-rewired": "^2.1.8",
+    "react-dnd": "^15.1.1",
+    "react-dnd-html5-backend": "^15.1.2",
     "react-dom": "^17.0.1",
     "react-router-config": "^5.1.1",
     "react-router-dom": "^5.2.0",

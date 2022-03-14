@@ -1,0 +1,41 @@
+#workflow-root {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  #worklflow-design {
+    display: flex;
+    height: 100%;
+    width: 100%;
+
+    .workflow-design-component {
+      display: flex;
+      flex-direction: column;
+      border: 1px solid rgb(201, 198, 198);
+      height: 100%;
+      flex: 0 0 200px;
+      padding: 10px;
+      margin-right: 10px;
+      button {
+        margin-bottom: 10px 10px;
+      }
+    }
+    #design{
+      height: 100%;
+      width: calc(100% - 550px); //100%;
+      margin-right: 10px;
+      background-color: white;
+      #container{
+        height: 100%;
+        width:  100%; 
+      }
+    }
+    .workflow-design-attributes {
+      display: flex;
+      flex-direction: column;
+      border: 1px solid rgb(201, 198, 198);
+      height: 100%;
+      flex: 0 0 350px;
+      padding: 3px;
+    }
+  }
+}

@@ -125,6 +125,25 @@ export const menuList: IMenuOutput[] = [
       isShow: true,
       type: 0,
       children: [],
-    }],
+    },
+    {
+      id: "13asdasasdas2131312322312",
+      name: "流程设计器",
+      path: "/workflow-design",
+      component: "pages/workflow/design-page/workflow-design",
+      tabs: [],
+      buttonClick: "",
+      buttons: [],
+      parentId: "000",
+      icon: "",
+      parentNumber: "",
+      microName: "",
+      componentName: "workflow-design",
+      sort: 0,
+      isShow: true,
+      type: 0,
+      children: [],
+    }
+    ],
   }
 ]
