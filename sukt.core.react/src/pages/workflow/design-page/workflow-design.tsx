@@ -67,7 +67,7 @@ class WorkFlowDesign extends React.Component {
         });
         window.addEventListener("resize", () => {
             const resizecontainerHtml = document.getElementById("container");
-            debugger
+            // debugger
             const resizewidth: number =
                 resizecontainerHtml !== null ? resizecontainerHtml.clientWidth : 1200;
             const resizeheight: number =
