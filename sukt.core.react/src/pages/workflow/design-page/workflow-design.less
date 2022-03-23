@@ -6,7 +6,6 @@
     display: flex;
     height: 100%;
     width: 100%;
-
     .workflow-design-component {
       display: flex;
       flex-direction: column;
@@ -23,13 +22,14 @@
       height: 100%;
       width: calc(100% - 550px); //100%;
       margin-right: 10px;
+      border: 1px solid rgb(201, 198, 198);
       background-color: white;
       #container{
-        height: 100%;
-        width:  100%; 
+        height: 100% !important;
+        width:  100% !important; 
         .x6-graph-background{
-          height: 100%;
-          width:  100%; 
+          height: 100% !important;
+          width:  100% !important; 
         }
         .x6-graph-grid{
           height: 100%;
@@ -40,10 +40,10 @@
     .workflow-design-attributes {
       display: flex;
       flex-direction: column;
-      border: 1px solid rgb(201, 198, 198);
+      // border: 1px solid rgb(201, 198, 198);
       height: 100%;
       flex: 0 0 350px;
-      padding: 3px;
+      padding: 0px;
     }
   }
 }
