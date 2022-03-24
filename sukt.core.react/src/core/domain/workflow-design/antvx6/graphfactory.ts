@@ -1,5 +1,5 @@
 import { Graph, Shape } from "@antv/x6";
-import { circleNodeBaseConfig, edgeBaseConfig, rectangleNodeConfig } from "../antvx6-config/node-defaultconfig";
+import { circleNodeBaseConfig, edgeBaseConfig, rectWorkNodeConfig, startNodeConfig } from "../antvx6-config/node-defaultconfig";
 
 import IGraphConfig from "../antvx6-config/antvx6graphconfig";
 
@@ -10,7 +10,7 @@ export default class GraphFactory {
         const height: number = container !== null ? container.clientHeight : 900;
         
         this.InitGraphShapeStyle();
-
+        this.registerCustom();
         const graph= new Graph({
             container: container!,
             width: width,
@@ -56,10 +56,20 @@ export default class GraphFactory {
         /**
          * 设置Rect默认样式及通用属性
          */
-        Shape.Rect.config(rectangleNodeConfig);
+        Shape.Rect.config(rectWorkNodeConfig);
         /**
          * 设置Circle默认样式及通用属性
          */
         Shape.Circle.config(circleNodeBaseConfig);
+        /**
+         * 设置Circle默认样式及通用属性
+         */
+        Shape.Ellipse.config(circleNodeBaseConfig);
+    }
+    /**
+     * 初始化节点及通用属性
+     */
+     private static registerCustom() {
+         Graph.registerNode("custom-start",startNodeConfig,  true)
     }
 }

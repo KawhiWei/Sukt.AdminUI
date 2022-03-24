@@ -16,6 +16,7 @@
     "@types/react-router-dom": "^5.1.7",
     "antd": "^4.10.2",
     "axios": "0.20.0",
+    "biguint-format": "^1.0.2",
     "customize-cra": "^1.0.0",
     "data-request": "^1.1.1",
     "echarts": "^5.2.2",

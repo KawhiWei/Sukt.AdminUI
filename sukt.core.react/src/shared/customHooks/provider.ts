@@ -3,8 +3,9 @@ import "reflect-metadata";
 import container from "@/shared/config/inversify.config";
 import { interfaces } from "inversify";
 
-const useProvider = <T>(params: interfaces.ServiceIdentifier<T>) => {
-  return container.get<T>(params);
-}
-
-export default useProvider;
+export default function Provider<T>(params: interfaces.ServiceIdentifier<T>) {
+  return (target: any, attr: T) => {
+    target[attr] = container.get<T>(params);
+    return target[attr];
+  };
+} 

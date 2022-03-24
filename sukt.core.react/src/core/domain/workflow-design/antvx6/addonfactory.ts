@@ -6,6 +6,7 @@ export default class AddonFactory {
     static createAddon(_graph: Graph): Dnd {
         return new Addon.Dnd({
             target: _graph,
+            animation: true
         });
     }
 }

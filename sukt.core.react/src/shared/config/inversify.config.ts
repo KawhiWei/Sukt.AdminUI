@@ -1,6 +1,8 @@
 import { Container } from "inversify";
 import FunctionService from "@/core/domain/system/api-function/function-service";
+import { GraphService } from "@/core/domain/workflow-design/antvx6/graph-service";
 import { IFunctionService } from "@/core/domain/system/api-function/ifunction-service";
+import IGraphService from "@/core/domain/workflow-design/antvx6/igraph-service";
 import { IMenuService } from "@/core/domain/system/menu/service/imenu-service";
 import { IMultitenantService } from "@/core/domain/system/multitenant/imultitenant-service";
 import {IRoleService} from "@/core/domain/system/role/irole-service";
@@ -17,5 +19,7 @@ container.bind<IUserService>(IocTypes.UserService).to(UserService);
 container.bind<IRoleService>(IocTypes.RoleService).to(RoleService);
 container.bind<IFunctionService>(IocTypes.FunctionService).to(FunctionService);
 container.bind<IMultitenantService>(IocTypes.MultitenantService).to(MultitenantService);
+container.bind<IGraphService>(IocTypes.GraphService).to(GraphService);
+
 
 export default container;

@@ -1,3 +1,4 @@
+var intformat = require('biguint-format')
 var FlakeId = require('flake-idgen');
 var flakeIdGen = new FlakeId();
 const nodePortsConfig = {
@@ -57,10 +58,10 @@ const nodePortsConfig = {
             },
         },
         items: [
-            { id: flakeIdGen.next(), group: "left" },
-            { id: flakeIdGen.next(), group: "top" },
-            { id: flakeIdGen.next(), group: "right" },
-            { id: flakeIdGen.next(), group: "bottom" },
+            { id: intformat(flakeIdGen.next(),'dec'), group: "left" },
+            { id: intformat(flakeIdGen.next(),'dec'), group: "top" },
+            { id: intformat(flakeIdGen.next(),'dec'), group: "right" },
+            { id: intformat(flakeIdGen.next(),'dec'), group: "bottom" },
         ],
     },
 }
@@ -92,9 +93,10 @@ const rectangleRectBody = {
 }
 
 /**
- * 过程节点默认配置
+ * 审批节点默认配置
+ * rectWorkNodeConfig
  */
-export const rectangleNodeConfig = {
+export const rectWorkNodeConfig = {
     attrs: {
         ...rectangleRectBody,
         label: {
@@ -130,6 +132,35 @@ export const rectangleNodeConfig = {
     //         selector: "label"
     //     }
     // ],
+}
+
+/**
+ * 开始节点默认配置
+ * rectWorkNodeConfig
+ */
+ export const startNodeConfig = {
+    // shape:"custom-start",
+    attrs: {
+        ...rectangleRectBody,
+        label: {
+            x: 0,//设置文字的偏移位置
+            // fill: "#5F95FF", //设置字体颜色
+            // fontWeight: "bold" //设置字体粗细
+        },
+        image: {
+            width: 30,
+            height: 30,
+            rx: 5, // 圆角
+            ry: 5,
+        }
+    },
+    ...nodePortsConfig,
+    visible: true,
+    zIndex: 1,
+    x: 40, // Number，必选，节点位置的 x 值
+    y: 40, // Number，必选，节点位置的 y 值
+    width: 120, // Number，可选，节点大小的 width 值
+    height: 40, // Number，可选，节点大小的 height 值
 }
 
 /**

@@ -23,7 +23,7 @@ export const NodeToolList: Array<INodeToolDto> = [
     {
         type: NodeType.startNode,
         shape: NodeShape[NodeShape.circle],
-        label: "发起节点",
+        label: "开始节点",
         icon: ""
     },
     {
