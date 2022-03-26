@@ -170,7 +170,7 @@ const circleBody = {
     body: {
         stroke: '#fb982c',
         strokeWidth: 1,
-        fill: "rgba(251,152,44,0.05)"
+        // fill: "rgba(251,152,44,0.05)"
     },
 }
 
